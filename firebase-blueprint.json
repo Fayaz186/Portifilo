@@ -1,0 +1,240 @@
+{
+  "entities": {
+    "ProfileBio": {
+      "title": "ProfileBio",
+      "description": "Personal biography and high-level portfolio metrics for Abdul Razaq Hilal",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string", "maxLength": 100 },
+        "namePashto": { "type": "string", "maxLength": 100 },
+        "title": { "type": "string", "maxLength": 150 },
+        "titlePashto": { "type": "string", "maxLength": 150 },
+        "roles": { "type": "array", "description": "Array of professional roles in English" },
+        "rolesPashto": { "type": "array", "description": "Array of professional roles in Pashto" },
+        "bio": { "type": "string", "maxLength": 5000 },
+        "bioPashto": { "type": "string", "maxLength": 5000 },
+        "location": { "type": "string", "maxLength": 100 },
+        "locationPashto": { "type": "string", "maxLength": 100 },
+        "email": { "type": "string", "maxLength": 150 },
+        "phone": { "type": "string", "maxLength": 50 },
+        "github": { "type": "string", "maxLength": 200 },
+        "linkedin": { "type": "string", "maxLength": 200 },
+        "twitter": { "type": "string", "maxLength": 200 },
+        "avatarUrl": { "type": "string", "maxLength": 500000 },
+        "logoUrl": { "type": "string", "maxLength": 500000 },
+        "yearsOfExperience": { "type": "number" },
+        "projectsCompleted": { "type": "number" },
+        "researchCitations": { "type": "number" },
+        "awardsWon": { "type": "number" },
+        "availableForWork": { "type": "boolean" }
+      },
+      "required": ["name", "title", "email"]
+    },
+    "ExperienceItem": {
+      "title": "ExperienceItem",
+      "description": "Professional work or engineering experience entry",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128 },
+        "role": { "type": "string", "maxLength": 200 },
+        "rolePashto": { "type": "string", "maxLength": 200 },
+        "company": { "type": "string", "maxLength": 200 },
+        "companyPashto": { "type": "string", "maxLength": 200 },
+        "period": { "type": "string", "maxLength": 100 },
+        "periodPashto": { "type": "string", "maxLength": 100 },
+        "location": { "type": "string", "maxLength": 100 },
+        "locationPashto": { "type": "string", "maxLength": 100 },
+        "description": { "type": "string", "maxLength": 3000 },
+        "descriptionPashto": { "type": "string", "maxLength": 3000 },
+        "achievements": { "type": "array" },
+        "achievementsPashto": { "type": "array" },
+        "technologies": { "type": "array" },
+        "order": { "type": "number" }
+      },
+      "required": ["id", "role", "company"]
+    },
+    "EducationItem": {
+      "title": "EducationItem",
+      "description": "Academic degree or university credential",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128 },
+        "degree": { "type": "string", "maxLength": 200 },
+        "degreePashto": { "type": "string", "maxLength": 200 },
+        "institution": { "type": "string", "maxLength": 200 },
+        "institutionPashto": { "type": "string", "maxLength": 200 },
+        "period": { "type": "string", "maxLength": 100 },
+        "periodPashto": { "type": "string", "maxLength": 100 },
+        "gpa": { "type": "string", "maxLength": 50 },
+        "honors": { "type": "string", "maxLength": 200 },
+        "honorsPashto": { "type": "string", "maxLength": 200 },
+        "description": { "type": "string", "maxLength": 2000 },
+        "descriptionPashto": { "type": "string", "maxLength": 2000 },
+        "order": { "type": "number" }
+      },
+      "required": ["id", "degree", "institution"]
+    },
+    "SkillCategory": {
+      "title": "SkillCategory",
+      "description": "Categorized skill grouping with proficiency indicators",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128 },
+        "title": { "type": "string", "maxLength": 150 },
+        "titlePashto": { "type": "string", "maxLength": 150 },
+        "skills": { "type": "array" },
+        "order": { "type": "number" }
+      },
+      "required": ["id", "title"]
+    },
+    "ProjectItem": {
+      "title": "ProjectItem",
+      "description": "Featured or shipped technical project",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128 },
+        "title": { "type": "string", "maxLength": 200 },
+        "titlePashto": { "type": "string", "maxLength": 200 },
+        "shortDescription": { "type": "string", "maxLength": 500 },
+        "shortDescriptionPashto": { "type": "string", "maxLength": 500 },
+        "fullDescription": { "type": "string", "maxLength": 5000 },
+        "fullDescriptionPashto": { "type": "string", "maxLength": 5000 },
+        "category": { "type": "string", "maxLength": 50 },
+        "technologies": { "type": "array" },
+        "imageUrl": { "type": "string", "maxLength": 1000 },
+        "demoUrl": { "type": "string", "maxLength": 500 },
+        "githubUrl": { "type": "string", "maxLength": 500 },
+        "featured": { "type": "boolean" },
+        "order": { "type": "number" }
+      },
+      "required": ["id", "title", "category"]
+    },
+    "ResearchPaper": {
+      "title": "ResearchPaper",
+      "description": "Academic peer-reviewed publication or conference paper",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128 },
+        "title": { "type": "string", "maxLength": 300 },
+        "titlePashto": { "type": "string", "maxLength": 300 },
+        "abstract": { "type": "string", "maxLength": 5000 },
+        "abstractPashto": { "type": "string", "maxLength": 5000 },
+        "authors": { "type": "array" },
+        "venue": { "type": "string", "maxLength": 250 },
+        "venuePashto": { "type": "string", "maxLength": 250 },
+        "year": { "type": "number" },
+        "doi": { "type": "string", "maxLength": 200 },
+        "pdfUrl": { "type": "string", "maxLength": 500 },
+        "citations": { "type": "number" },
+        "keywords": { "type": "array" },
+        "order": { "type": "number" }
+      },
+      "required": ["id", "title", "venue", "year"]
+    },
+    "MediaItem": {
+      "title": "MediaItem",
+      "description": "Certificate, event photo, or award verification item",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128 },
+        "title": { "type": "string", "maxLength": 200 },
+        "titlePashto": { "type": "string", "maxLength": 200 },
+        "type": { "type": "string", "maxLength": 50 },
+        "url": { "type": "string", "maxLength": 1000 },
+        "thumbnailUrl": { "type": "string", "maxLength": 1000 },
+        "date": { "type": "string", "maxLength": 50 },
+        "badge": { "type": "string", "maxLength": 100 },
+        "description": { "type": "string", "maxLength": 1000 },
+        "descriptionPashto": { "type": "string", "maxLength": 1000 },
+        "order": { "type": "number" }
+      },
+      "required": ["id", "title", "url"]
+    },
+    "AchievementItem": {
+      "title": "AchievementItem",
+      "description": "Honors, hackathon prize, or academic scholarship milestone",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128 },
+        "title": { "type": "string", "maxLength": 200 },
+        "titlePashto": { "type": "string", "maxLength": 200 },
+        "year": { "type": "string", "maxLength": 50 },
+        "organization": { "type": "string", "maxLength": 200 },
+        "organizationPashto": { "type": "string", "maxLength": 200 },
+        "description": { "type": "string", "maxLength": 1000 },
+        "descriptionPashto": { "type": "string", "maxLength": 1000 },
+        "badge": { "type": "string", "maxLength": 100 },
+        "order": { "type": "number" }
+      },
+      "required": ["id", "title", "organization"]
+    },
+    "ContactMessage": {
+      "title": "ContactMessage",
+      "description": "Public contact inquiry sent by visitors",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128 },
+        "senderName": { "type": "string", "maxLength": 100 },
+        "senderEmail": { "type": "string", "maxLength": 150 },
+        "subject": { "type": "string", "maxLength": 200 },
+        "message": { "type": "string", "maxLength": 3000 },
+        "createdAt": { "type": "string", "maxLength": 50 },
+        "read": { "type": "boolean" }
+      },
+      "required": ["senderName", "senderEmail", "message"]
+    },
+    "AdminUser": {
+      "title": "AdminUser",
+      "description": "Administrator record for access authorization",
+      "type": "object",
+      "properties": {
+        "email": { "type": "string", "maxLength": 150 },
+        "role": { "type": "string", "maxLength": 50 },
+        "addedAt": { "type": "string", "maxLength": 50 }
+      },
+      "required": ["email", "role"]
+    }
+  },
+  "firestore": {
+    "/content/profile": {
+      "schema": "ProfileBio",
+      "description": "Global biography and top-level profile metrics document"
+    },
+    "/experiences/{experienceId}": {
+      "schema": "ExperienceItem",
+      "description": "Work experiences collection"
+    },
+    "/education/{educationId}": {
+      "schema": "EducationItem",
+      "description": "Education degrees collection"
+    },
+    "/skills/{skillId}": {
+      "schema": "SkillCategory",
+      "description": "Categorized skill items collection"
+    },
+    "/projects/{projectId}": {
+      "schema": "ProjectItem",
+      "description": "Projects portfolio collection"
+    },
+    "/research/{researchId}": {
+      "schema": "ResearchPaper",
+      "description": "Scholarly research papers collection"
+    },
+    "/media/{mediaId}": {
+      "schema": "MediaItem",
+      "description": "Certificates and media collection"
+    },
+    "/achievements/{achievementId}": {
+      "schema": "AchievementItem",
+      "description": "Achievements and awards collection"
+    },
+    "/messages/{messageId}": {
+      "schema": "ContactMessage",
+      "description": "Incoming inquiries collection created by visitors, manageable by admin"
+    },
+    "/admins/{adminId}": {
+      "schema": "AdminUser",
+      "description": "Admin authorization mapping collection"
+    }
+  }
+}

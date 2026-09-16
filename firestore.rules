@@ -1,0 +1,67 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Default Catch-all
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // Connection Health Verification Endpoint
+    match /test/connection {
+      allow read: if true;
+      allow write: if false;
+    }
+
+    // Content: Profile Bio & Metrics
+    match /content/profile {
+      allow read, write: if true;
+    }
+
+    // Experiences Collection
+    match /experiences/{experienceId} {
+      allow read, write: if true;
+    }
+
+    // Education Collection
+    match /education/{educationId} {
+      allow read, write: if true;
+    }
+
+    // Skills Collection
+    match /skills/{skillId} {
+      allow read, write: if true;
+    }
+
+    // Projects Collection
+    match /projects/{projectId} {
+      allow read, write: if true;
+    }
+
+    // Research Collection
+    match /research/{researchId} {
+      allow read, write: if true;
+    }
+
+    // Media Collection
+    match /media/{mediaId} {
+      allow read, write: if true;
+    }
+
+    // Achievements Collection
+    match /achievements/{achievementId} {
+      allow read, write: if true;
+    }
+
+    // Messages Collection
+    match /messages/{messageId} {
+      allow read, write: if true;
+    }
+
+    // Admins Collection
+    match /admins/{adminId} {
+      allow read, write: if true;
+    }
+  }
+}
+
