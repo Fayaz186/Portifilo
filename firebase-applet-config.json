@@ -1,11 +1,11 @@
 {
-  "projectId": "proven-dialect-3f38q",
-  "appId": "1:321544812075:web:f9f8fa962af5c06fe9dc6e",
-  "apiKey": "AIzaSyAClVSiLCF6a5EzJu1SNhMga55drTIpxZg",
-  "authDomain": "proven-dialect-3f38q.firebaseapp.com",
+  "apiKey": "AIzaSyCJ4rFYm7y-dStEKmRsMPIOXXh4pe-xR40",
+  "authDomain": "fayaz-ahmad-malikzai-portfolio.firebaseapp.com",
+  "projectId": "fayaz-ahmad-malikzai-portfolio",
+  "storageBucket": "fayaz-ahmad-malikzai-portfolio.firebasestorage.app",
+  "messagingSenderId": "680974483035",
+  "appId": "1:680974483035:web:3de80e5416baab01ce897e"
   "firestoreDatabaseId": "ai-studio-abdulrazaqhilalp-d794e9f7-a3b6-4f16-a631-878ee3ecdde4",
-  "storageBucket": "proven-dialect-3f38q.firebasestorage.app",
-  "messagingSenderId": "321544812075",
   "measurementId": "",
   "oAuthClientId": "321544812075-8p73gl86m0o7dvghdul3iur5s1c86vge.apps.googleusercontent.com",
   "recaptchaSiteKey": ""
