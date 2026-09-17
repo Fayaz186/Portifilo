@@ -27,9 +27,9 @@ export const Footer: React.FC<FooterProps> = ({ profile, onOpenResume }) => {
   };
 
   return (
-    <footer id="main-footer" className="bg-slate-950 text-slate-300 pt-16 pb-12 border-t border-slate-800 no-print">
+    <footer id="main-footer" className="bg-slate-950 text-slate-300 pt-12 sm:pt-16 pb-8 sm:pb-12 border-t border-slate-800 no-print">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 pb-12 border-b border-slate-800/80">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-10 pb-10 sm:pb-12 border-b border-slate-800/80">
           {/* Col 1: Bio */}
           <div className="space-y-4">
             <div className="flex items-center gap-2.5">
@@ -184,22 +184,22 @@ export const Footer: React.FC<FooterProps> = ({ profile, onOpenResume }) => {
                 <Mail className="w-4 h-4" />
               </a>
             </div>
-            <p className="text-xs text-slate-400">
+            <p className="text-xs text-slate-400 break-all">
               {profile.email}
             </p>
           </div>
         </div>
 
         {/* Bottom bar */}
-        <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500">
+        <div className="pt-6 sm:pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500 text-center sm:text-left rtl:sm:text-right">
           <div>
             &copy; {new Date().getFullYear()} {profile.name[language]}. All rights reserved.
           </div>
-          <div className="flex items-center gap-4">
+          <div className="flex flex-wrap items-center justify-center sm:justify-end gap-3 sm:gap-4">
             <span>React &bull; TypeScript &bull; Tailwind CSS &bull; Firebase</span>
             <button
               onClick={scrollToTop}
-              className="p-2 rounded-lg bg-slate-900 hover:bg-slate-800 text-slate-400 hover:text-white transition-colors cursor-pointer"
+              className="p-2 rounded-lg bg-slate-900 hover:bg-slate-800 text-slate-400 hover:text-white transition-colors cursor-pointer min-w-[36px] min-h-[36px] flex items-center justify-center"
               aria-label="Scroll to top"
             >
               <ArrowUp className="w-4 h-4" />

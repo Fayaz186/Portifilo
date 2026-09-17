@@ -16,26 +16,21 @@ import { AdminLoginModal } from './components/admin/AdminLoginModal';
 import { AdminDashboard } from './components/admin/AdminDashboard';
 import { BrandLogo } from './components/common/BrandLogo';
 import { getStoredData, onDataChange, uploadPortfolioAsset, saveProfile } from './services/storageService';
-import { isFirebaseActive, testFirebaseConnection } from './services/firebase';
+import { testFirebaseConnection } from './services/firebase';
 import { initialPortfolioData } from './data/initialData';
 import { PortfolioData } from './types';
 import {
   Loader2,
-  ShieldCheck,
-  CloudCheck,
   AlertTriangle,
-  RefreshCw,
-  Sparkles,
-  Lock
+  RefreshCw
 } from 'lucide-react';
 
 const PortfolioContent: React.FC = () => {
   const { language } = useLanguage();
-  const { isAdmin, currentUser } = useAuth();
+  const { isAdmin } = useAuth();
 
   const [data, setData] = useState<PortfolioData>(initialPortfolioData);
   const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [isFromFirestore, setIsFromFirestore] = useState<boolean>(false);
   const [connectionError, setConnectionError] = useState<string | null>(null);
 
   const [isResumeOpen, setIsResumeOpen] = useState(false);
@@ -55,7 +50,6 @@ const PortfolioContent: React.FC = () => {
 
       const res = await getStoredData();
       setData(res.data);
-      setIsFromFirestore(res.isFromFirestore);
       if (res.error) {
         setConnectionError(res.error);
       }
@@ -75,11 +69,48 @@ const PortfolioContent: React.FC = () => {
     return () => unsubscribe();
   }, [loadData]);
 
-  const handleAdminAction = () => {
-    if (isAdmin) {
-      setIsAdminDashboardOpen(true);
-    } else {
-      setIsAdminLoginOpen(true);
+  // Admin Portal is ONLY accessible through its direct link/URL (#admin, #/admin, /admin, ?admin)
+  const checkAdminRoute = useCallback(() => {
+    const hash = window.location.hash.toLowerCase();
+    const pathname = window.location.pathname.toLowerCase();
+    const search = new URLSearchParams(window.location.search);
+
+    const isDirectAdminUrl =
+      hash === '#admin' ||
+      hash === '#/admin' ||
+      pathname === '/admin' ||
+      pathname.endsWith('/admin') ||
+      search.has('admin');
+
+    if (isDirectAdminUrl) {
+      if (isAdmin) {
+        setIsAdminDashboardOpen(true);
+        setIsAdminLoginOpen(false);
+      } else {
+        setIsAdminLoginOpen(true);
+      }
+    }
+  }, [isAdmin]);
+
+  useEffect(() => {
+    checkAdminRoute();
+    window.addEventListener('hashchange', checkAdminRoute);
+    window.addEventListener('popstate', checkAdminRoute);
+    return () => {
+      window.removeEventListener('hashchange', checkAdminRoute);
+      window.removeEventListener('popstate', checkAdminRoute);
+    };
+  }, [checkAdminRoute]);
+
+  const handleCloseAdminModals = () => {
+    setIsAdminLoginOpen(false);
+    setIsAdminDashboardOpen(false);
+    // Reset hash if it was pointing to admin
+    if (window.location.hash.toLowerCase() === '#admin' || window.location.hash.toLowerCase() === '#/admin') {
+      window.history.replaceState(null, '', window.location.pathname + window.location.search);
+    }
+    if (window.location.pathname.toLowerCase().endsWith('/admin')) {
+      window.history.replaceState(null, '', '/');
     }
   };
 
@@ -118,10 +149,10 @@ const PortfolioContent: React.FC = () => {
         </div>
         <div className="text-center space-y-2 max-w-sm">
           <h2 className="text-xl font-bold tracking-tight text-white">
-            Abdul Razaq Hilal
+            Fayaz Ahmad Malikzai
           </h2>
           <p className="text-xs text-slate-400">
-            Connecting to Cloud Firestore & initializing bilingual portfolio...
+            {language === 'fa' ? 'در حال بارگذاری پورتفولیو...' : 'Loading portfolio...'}
           </p>
         </div>
       </div>
@@ -130,50 +161,6 @@ const PortfolioContent: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-slate-50 text-slate-800 selection:bg-indigo-500 selection:text-white flex flex-col font-sans">
-      {/* Top Banner: Status & Admin Feedback - Beautifully visible above sticky menu */}
-      <div id="top-status-bar" className="bg-slate-900 border-b border-slate-800 text-slate-300 text-xs py-2 px-4 sm:px-8">
-        <div className="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-3">
-          <div className="flex items-center gap-2">
-            <span className="inline-block w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
-            <span className="inline-block w-2 h-2 rounded-full bg-emerald-500"></span>
-            <span className="font-semibold text-white">
-              {isFromFirestore
-                ? (language === 'fa' ? 'پایگاه داده آنلاین فایربیس (Cloud Firestore)' : 'Cloud Firestore Live')
-                : (language === 'fa' ? 'فایربیس آماده به کار' : 'Firebase Ready')}
-            </span>
-            <span className="text-slate-500 hidden sm:inline">&bull;</span>
-            <span className="text-slate-400 hidden sm:inline">
-              {language === 'fa' ? 'پروژه:' : 'Project:'} proven-dialect-3f38q
-            </span>
-          </div>
-
-          <div className="flex items-center gap-3">
-            {isAdmin ? (
-              <div className="flex items-center gap-2">
-                <span className="flex items-center gap-1 text-emerald-400 font-bold bg-emerald-950/60 border border-emerald-800/80 px-2.5 py-0.5 rounded-full text-[11px]">
-                  <ShieldCheck className="w-3.5 h-3.5" />
-                  <span>{language === 'fa' ? 'مدیر سیستم:' : 'Admin:'} {currentUser?.email}</span>
-                </span>
-                <button
-                  onClick={() => setIsAdminDashboardOpen(true)}
-                  className="text-xs bg-indigo-600 hover:bg-indigo-500 text-white font-bold px-3 py-1 rounded-lg transition-colors cursor-pointer"
-                >
-                  {language === 'fa' ? 'مدیریت محتوا' : 'Manage Content'}
-                </button>
-              </div>
-            ) : (
-              <button
-                onClick={() => setIsAdminLoginOpen(true)}
-                className="flex items-center gap-1.5 text-slate-400 hover:text-white transition-colors cursor-pointer"
-              >
-                <Lock className="w-3.5 h-3.5" />
-                <span>{language === 'fa' ? 'ورود به پورتال مدیریت' : 'Administrator Sign In'}</span>
-              </button>
-            )}
-          </div>
-        </div>
-      </div>
-
       {/* Error State Banner if connection warning exists */}
       {connectionError && (
         <div className="bg-amber-50 border-b border-amber-200 text-amber-900 text-xs py-2.5 px-4 sm:px-8">
@@ -181,7 +168,7 @@ const PortfolioContent: React.FC = () => {
             <div className="flex items-center gap-2">
               <AlertTriangle className="w-4 h-4 text-amber-600 shrink-0" />
               <span>
-                <strong>Firebase Notice:</strong> {connectionError}
+                <strong>Notice:</strong> {connectionError}
               </span>
             </div>
             <button
@@ -198,7 +185,6 @@ const PortfolioContent: React.FC = () => {
       {/* Top Navigation */}
       <Navbar
         onOpenResume={() => setIsResumeOpen(true)}
-        onOpenAdmin={handleAdminAction}
         customLogoUrl={data.profile.logoUrl}
         onUploadLogo={handleUpdateLogo}
       />
@@ -244,7 +230,7 @@ const PortfolioContent: React.FC = () => {
           media={data.media}
         />
 
-        {/* 9. Direct Contact & Collaboration Form */}
+        {/* 8. Direct Contact & Collaboration Form */}
         <ContactSection
           profile={data.profile}
         />
@@ -254,7 +240,6 @@ const PortfolioContent: React.FC = () => {
       <Footer
         profile={data.profile}
         onOpenResume={() => setIsResumeOpen(true)}
-        onOpenAdmin={handleAdminAction}
       />
 
       {/* Printable / Downloadable PDF Resume Generator Modal */}
@@ -270,17 +255,20 @@ const PortfolioContent: React.FC = () => {
         achievements={data.achievements}
       />
 
-      {/* Admin Authentication Modal */}
+      {/* Admin Authentication Modal (Only triggered via direct URL) */}
       <AdminLoginModal
         isOpen={isAdminLoginOpen}
-        onClose={() => setIsAdminLoginOpen(false)}
-        onSuccess={() => setIsAdminDashboardOpen(true)}
+        onClose={handleCloseAdminModals}
+        onSuccess={() => {
+          setIsAdminLoginOpen(false);
+          setIsAdminDashboardOpen(true);
+        }}
       />
 
-      {/* Admin Content Management Dashboard */}
+      {/* Admin Content Management Dashboard (Only triggered via direct URL) */}
       <AdminDashboard
         isOpen={isAdminDashboardOpen}
-        onClose={() => setIsAdminDashboardOpen(false)}
+        onClose={handleCloseAdminModals}
         profile={data.profile}
         experiences={data.experiences}
         education={data.education}

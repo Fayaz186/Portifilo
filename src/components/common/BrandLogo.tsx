@@ -24,7 +24,7 @@ export const BrandLogo: React.FC<BrandLogoProps> = ({
       >
         <img
           src={customLogoUrl}
-          alt="Abdul Razaq Hilal Logo"
+          alt="Fayaz Ahmad Malikzai Logo"
           referrerPolicy="no-referrer"
           className="w-full h-full object-contain p-0.5"
           onError={(e) => {
@@ -36,14 +36,14 @@ export const BrandLogo: React.FC<BrandLogoProps> = ({
     );
   }
 
-  // Default Distinctive Hilal & AR Monogram Logo
+  // Default Distinctive Logo
   return (
     <div
       className={`${sizeClasses[size]} overflow-hidden shadow-sm shadow-indigo-950/10 flex items-center justify-center transition-transform duration-300 group-hover:scale-105 bg-white ${className}`}
     >
       <img
         src="/logo.jpeg"
-        alt="Abdul Razaq Hilal Logo"
+        alt="Fayaz Ahmad Malikzai Logo"
         className="w-full h-full object-contain p-0.5"
       />
     </div>

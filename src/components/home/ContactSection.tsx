@@ -55,9 +55,9 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ profile }) => {
   };
 
   return (
-    <section id="contact" className="scroll-mt-28 py-20 bg-slate-50/60">
+    <section id="contact" className="scroll-mt-28 py-12 sm:py-20 bg-slate-50/60">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12">
           {/* Left info column */}
           <div className="lg:col-span-5 space-y-6">
             <div>
@@ -65,56 +65,56 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ profile }) => {
                 <MessageSquare className="w-3.5 h-3.5" />
                 <span>{language === 'fa' ? 'ارتباط و همکاری' : 'Get In Touch'}</span>
               </div>
-              <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
+              <h2 className="text-2xl xs:text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
                 {t('contactTitle')}
               </h2>
-              <p className="mt-2 text-base text-slate-600">
+              <p className="mt-2 text-sm sm:text-base text-slate-600">
                 {t('contactSubtitle')}
               </p>
             </div>
 
             {/* Direct Cards */}
             <div className="space-y-3 pt-2">
-              <div className="p-4 rounded-xl bg-white border border-slate-200/80 shadow-xs flex items-center gap-4">
+              <div className="p-3.5 sm:p-4 rounded-xl bg-white border border-slate-200/80 shadow-xs flex items-center gap-3 sm:gap-4 overflow-hidden">
                 <div className="w-10 h-10 rounded-lg bg-indigo-50 text-indigo-600 flex items-center justify-center shrink-0">
                   <Mail className="w-5 h-5" />
                 </div>
-                <div>
+                <div className="min-w-0 flex-1">
                   <div className="text-xs font-bold uppercase text-slate-400">
                     {language === 'fa' ? 'ایمیل رسمی' : 'Official Email'}
                   </div>
                   <a
                     href={`mailto:${profile.email}`}
-                    className="text-sm font-semibold text-slate-900 hover:text-indigo-600 transition-colors"
+                    className="text-xs sm:text-sm font-semibold text-slate-900 hover:text-indigo-600 transition-colors break-all"
                   >
                     {profile.email}
                   </a>
                 </div>
               </div>
 
-              <div className="p-4 rounded-xl bg-white border border-slate-200/80 shadow-xs flex items-center gap-4">
+              <div className="p-3.5 sm:p-4 rounded-xl bg-white border border-slate-200/80 shadow-xs flex items-center gap-3 sm:gap-4 overflow-hidden">
                 <div className="w-10 h-10 rounded-lg bg-indigo-50 text-indigo-600 flex items-center justify-center shrink-0">
                   <Phone className="w-5 h-5" />
                 </div>
-                <div>
+                <div className="min-w-0 flex-1">
                   <div className="text-xs font-bold uppercase text-slate-400">
                     {language === 'fa' ? 'شماره تماس / تلگرام' : 'Phone / WhatsApp'}
                   </div>
-                  <div className="text-sm font-semibold text-slate-900">
+                  <div className="text-xs sm:text-sm font-semibold text-slate-900 break-words">
                     {profile.phone}
                   </div>
                 </div>
               </div>
 
-              <div className="p-4 rounded-xl bg-white border border-slate-200/80 shadow-xs flex items-center gap-4">
+              <div className="p-3.5 sm:p-4 rounded-xl bg-white border border-slate-200/80 shadow-xs flex items-center gap-3 sm:gap-4 overflow-hidden">
                 <div className="w-10 h-10 rounded-lg bg-indigo-50 text-indigo-600 flex items-center justify-center shrink-0">
                   <MapPin className="w-5 h-5" />
                 </div>
-                <div>
+                <div className="min-w-0 flex-1">
                   <div className="text-xs font-bold uppercase text-slate-400">
                     {language === 'fa' ? 'محل سکونت و پایگاه' : 'Primary Base'}
                   </div>
-                  <div className="text-sm font-semibold text-slate-900">
+                  <div className="text-xs sm:text-sm font-semibold text-slate-900 break-words">
                     {profile.location[language]}
                   </div>
                 </div>
@@ -124,7 +124,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ profile }) => {
 
           {/* Right: Contact Form */}
           <div className="lg:col-span-7">
-            <div className="bg-white rounded-2xl p-6 sm:p-10 border border-slate-200/90 shadow-sm">
+            <div className="bg-white rounded-2xl p-4 sm:p-8 lg:p-10 border border-slate-200/90 shadow-sm">
               <h3 className="text-xl font-bold text-slate-900 mb-6 flex items-center gap-2">
                 <span>{language === 'fa' ? 'ارسال مستقیم پیام یا پیشنهاد' : 'Send a Direct Inquiry'}</span>
               </h3>

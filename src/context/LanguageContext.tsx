@@ -65,7 +65,7 @@ export const dictionary: Translations = {
   formMessage: { en: 'Message Details', fa: 'متن پیام' },
   formSubmit: { en: 'Send Message', fa: 'ارسال پیام' },
   formSending: { en: 'Sending securely...', fa: 'در حال ارسال پیام...' },
-  formSuccess: { en: 'Thank you! Your message was received securely. Abdul Razaq will respond soon.', fa: 'تشکر! پیام شما با موفقیت دریافت شد. عبدالرازق به زودی با شما تماس خواهد گرفت.' },
+  formSuccess: { en: 'Thank you! Your message was received securely. Fayaz will respond soon.', fa: 'تشکر! پیام شما با موفقیت دریافت شد. فیاض به زودی با شما تماس خواهد گرفت.' },
 
   // Admin & Management
   adminTitle: { en: 'Admin Content Management', fa: 'مدیریت محتوا و پورتال ادمین' },

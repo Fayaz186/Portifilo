@@ -138,6 +138,19 @@ export async function getProfile(): Promise<ProfileBio> {
         if (!data.avatarUrl || data.avatarUrl.includes('unsplash.com')) {
           data.avatarUrl = '/fayaz.jpeg';
         }
+        // Ensure updated profile information is applied
+        if (data.name?.en?.includes('Abdul Razaq') || !data.name?.en) {
+          data.name = initialProfile.name;
+        }
+        if (data.email?.includes('abdulrazaq') || !data.email) {
+          data.email = initialProfile.email;
+        }
+        if (!data.roles?.en || data.roles.en.length !== 3 || !data.roles.en.includes('Web Designer')) {
+          data.roles = initialProfile.roles;
+        }
+        if (data.shortBio?.en?.includes('Passionate software engineer') || !data.shortBio?.en) {
+          data.shortBio = initialProfile.shortBio;
+        }
         setLocal(KEYS.PROFILE, data);
         return data;
       }
@@ -149,12 +162,23 @@ export async function getProfile(): Promise<ProfileBio> {
   const cached = getLocal<ProfileBio>(KEYS.PROFILE, initialProfile);
   if (cached.logoUrl === '/logo.svg' || !cached.logoUrl) {
     cached.logoUrl = '/logo.jpeg';
-    setLocal(KEYS.PROFILE, cached);
   }
   if (!cached.avatarUrl || cached.avatarUrl.includes('unsplash.com')) {
     cached.avatarUrl = '/fayaz.jpeg';
-    setLocal(KEYS.PROFILE, cached);
   }
+  if (cached.name?.en?.includes('Abdul Razaq') || !cached.name?.en) {
+    cached.name = initialProfile.name;
+  }
+  if (cached.email?.includes('abdulrazaq') || !cached.email) {
+    cached.email = initialProfile.email;
+  }
+  if (!cached.roles?.en || cached.roles.en.length !== 3 || !cached.roles.en.includes('Web Designer')) {
+    cached.roles = initialProfile.roles;
+  }
+  if (cached.shortBio?.en?.includes('Passionate software engineer') || !cached.shortBio?.en) {
+    cached.shortBio = initialProfile.shortBio;
+  }
+  setLocal(KEYS.PROFILE, cached);
   return cached;
 }
 

@@ -55,7 +55,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
 
     // Check if email belongs to domain admin
-    if (emailLower.includes('admin') || emailLower.includes('abdulrazaq.hilal')) {
+    if (emailLower.includes('admin') || emailLower.includes('fayazmalikzai') || emailLower.includes('fayaz')) {
       return true;
     }
 

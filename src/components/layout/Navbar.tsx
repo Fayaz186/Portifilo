@@ -1,34 +1,26 @@
 import React, { useState, useEffect } from 'react';
 import { useLanguage } from '../../context/LanguageContext';
-import { useAuth } from '../../context/AuthContext';
 import {
   Menu,
   X,
   FileText,
   Globe,
-  Lock,
-  UserCheck,
-  Code2,
-  Sparkles,
   Camera
 } from 'lucide-react';
 import { BrandLogo } from '../common/BrandLogo';
 
 interface NavbarProps {
   onOpenResume: () => void;
-  onOpenAdmin: () => void;
   customLogoUrl?: string;
   onUploadLogo?: (file: File) => Promise<void>;
 }
 
 export const Navbar: React.FC<NavbarProps> = ({
   onOpenResume,
-  onOpenAdmin,
   customLogoUrl,
   onUploadLogo
 }) => {
-  const { language, setLanguage, t, isRTL } = useLanguage();
-  const { isAdmin } = useAuth();
+  const { language, setLanguage, t } = useLanguage();
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
@@ -90,11 +82,11 @@ export const Navbar: React.FC<NavbarProps> = ({
             )}
           </div>
           <a href="#" className="flex flex-col focus:outline-none">
-            <span className="font-bold text-slate-900 leading-tight text-base tracking-tight group-hover/logo:text-indigo-600 transition-colors">
-              {language === 'fa' ? 'عبدالرازق هلال' : 'Abdul Razaq Hilal'}
+            <span className="font-bold text-slate-900 leading-tight text-sm sm:text-base tracking-tight group-hover/logo:text-indigo-600 transition-colors line-clamp-1">
+              {language === 'fa' ? 'فیاض احمد ملک‌زی' : 'Fayaz Ahmad Malikzai'}
             </span>
-            <span className="text-xs text-slate-500 font-medium leading-none">
-              {language === 'fa' ? 'مهندس نرم‌افزار و پژوهشگر' : 'Software Engineer & Researcher'}
+            <span className="text-[11px] sm:text-xs text-slate-500 font-medium leading-none hidden xs:block">
+              {language === 'fa' ? 'طراح و توسعه‌دهنده وب' : 'Web Designer & Developer'}
             </span>
           </a>
         </div>
@@ -113,15 +105,15 @@ export const Navbar: React.FC<NavbarProps> = ({
         </nav>
 
         {/* Right Controls */}
-        <div className="flex items-center gap-1.5 sm:gap-3">
+        <div className="flex items-center gap-1 sm:gap-2">
           {/* Language Switcher */}
           <button
             id="lang-switcher-btn"
             onClick={toggleLanguage}
-            className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs sm:text-sm font-semibold text-slate-700 bg-slate-100 hover:bg-slate-200 border border-slate-200 transition-all cursor-pointer"
+            className="flex items-center gap-1 sm:gap-1.5 px-2 sm:px-2.5 py-1.5 rounded-lg text-xs sm:text-sm font-semibold text-slate-700 bg-slate-100 hover:bg-slate-200 border border-slate-200 transition-all cursor-pointer shrink-0 min-h-[38px]"
             title="Switch Language"
           >
-            <Globe className="w-4 h-4 text-indigo-600" />
+            <Globe className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-indigo-600" />
             <span>{language === 'en' ? 'دری' : 'English'}</span>
           </button>
 
@@ -129,45 +121,22 @@ export const Navbar: React.FC<NavbarProps> = ({
           <button
             id="resume-trigger-btn"
             onClick={onOpenResume}
-            className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs sm:text-sm font-semibold text-white bg-indigo-600 hover:bg-indigo-700 shadow-sm shadow-indigo-200 transition-all cursor-pointer"
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs sm:text-sm font-semibold text-white bg-indigo-600 hover:bg-indigo-700 shadow-xs shadow-indigo-200 transition-all cursor-pointer shrink-0 min-h-[38px]"
           >
             <FileText className="w-4 h-4" />
-            <span>{t('navResume')}</span>
-          </button>
-
-          {/* Admin Button */}
-          <button
-            id="admin-trigger-btn"
-            onClick={onOpenAdmin}
-            className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs sm:text-sm font-medium border transition-all cursor-pointer ${
-              isAdmin
-                ? 'bg-emerald-50 text-emerald-700 border-emerald-300 hover:bg-emerald-100'
-                : 'bg-slate-50 text-slate-600 border-slate-200 hover:bg-slate-100'
-            }`}
-            title={isAdmin ? 'Admin Dashboard Active' : 'Admin Login'}
-          >
-            {isAdmin ? (
-              <>
-                <UserCheck className="w-3.5 h-3.5 text-emerald-600" />
-                <span className="hidden md:inline">{language === 'fa' ? 'مدیر' : 'Admin'}</span>
-              </>
-            ) : (
-              <>
-                <Lock className="w-3.5 h-3.5 text-slate-500" />
-                <span className="hidden md:inline">{t('adminLogin')}</span>
-              </>
-            )}
+            <span className="hidden xs:inline">{t('navResume')}</span>
+            <span className="xs:hidden">CV</span>
           </button>
 
           {/* Mobile Menu Toggle */}
           <button
             id="mobile-menu-toggle-btn"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="md:hidden flex items-center gap-1 p-2 rounded-lg text-slate-700 hover:bg-slate-100 cursor-pointer"
+            className="md:hidden flex items-center justify-center gap-1 p-2 rounded-lg text-slate-700 hover:bg-slate-100 cursor-pointer min-h-[40px] min-w-[40px]"
             aria-label="Toggle Navigation"
           >
-            {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-            <span className="text-xs font-semibold">{language === 'fa' ? 'منو' : 'Menu'}</span>
+            {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+            <span className="text-xs font-semibold hidden xs:inline">{language === 'fa' ? 'منو' : 'Menu'}</span>
           </button>
         </div>
       </div>
@@ -176,7 +145,7 @@ export const Navbar: React.FC<NavbarProps> = ({
       {mobileMenuOpen && (
         <div
           id="mobile-menu-drawer"
-          className="md:hidden bg-white border-b border-slate-200 px-4 pt-2 pb-6 space-y-2 animate-fadeIn shadow-lg"
+          className="md:hidden bg-white border-b border-slate-200 px-4 pt-2 pb-6 space-y-3 animate-fadeIn shadow-lg"
         >
           <div className="grid grid-cols-2 gap-2 pt-2">
             {navLinks.map((link) => (
@@ -184,7 +153,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                 key={link.href}
                 href={link.href}
                 onClick={() => setMobileMenuOpen(false)}
-                className="px-3 py-2 rounded-lg text-sm font-medium text-slate-700 hover:bg-slate-100 hover:text-indigo-600"
+                className="px-3 py-2.5 rounded-lg text-sm font-medium text-slate-700 hover:bg-slate-100 hover:text-indigo-600 flex items-center min-h-[44px]"
               >
                 {link.label}
               </a>
@@ -198,7 +167,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                 setMobileMenuOpen(false);
                 onOpenResume();
               }}
-              className="w-full flex items-center justify-center gap-2 py-2.5 px-4 rounded-lg bg-indigo-600 text-white font-medium text-sm shadow-sm"
+              className="w-full flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-indigo-600 text-white font-semibold text-sm shadow-xs min-h-[44px] cursor-pointer"
             >
               <FileText className="w-4 h-4" />
               <span>{t('downloadResume')}</span>

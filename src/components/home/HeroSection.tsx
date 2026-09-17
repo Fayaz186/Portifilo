@@ -75,7 +75,18 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ profile, onOpenResume,
     }
   };
 
-  const roles = profile.roles[language];
+  const defaultRoles = {
+    en: ['Web Designer', 'Web Developer', 'Computer Science Student'],
+    fa: ['طراح وب', 'توسعه‌دهنده وب', 'دانشجوی علوم کامپیوتر']
+  };
+
+  const roles = (profile.roles?.[language]?.length === 3)
+    ? profile.roles[language]
+    : defaultRoles[language];
+
+  useEffect(() => {
+    setActiveRoleIndex(0);
+  }, [language]);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -113,24 +124,24 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ profile, onOpenResume,
                 initial={{ opacity: 0, y: 15 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.1 }}
-                className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-slate-900 tracking-tight leading-[1.15]"
+                className="text-3xl xs:text-4xl sm:text-5xl lg:text-6xl font-extrabold text-slate-900 tracking-tight leading-[1.15] break-words"
               >
                 {profile.name[language]}
               </motion.h1>
 
               {/* Dynamic Rotating Role */}
-              <div className="h-10 sm:h-12 flex items-center overflow-hidden">
-                <span className="text-lg sm:text-xl font-semibold text-slate-500 mr-2 rtl:mr-0 rtl:ml-2">
+              <div className="min-h-[2.75rem] py-1 flex flex-wrap items-center gap-2">
+                <span className="text-base sm:text-lg font-semibold text-slate-500">
                   {language === 'fa' ? 'تخصص و نقش:' : 'I am a'}
                 </span>
                 <AnimatePresence mode="wait">
                   <motion.span
                     key={activeRoleIndex + language}
-                    initial={{ opacity: 0, y: 20 }}
+                    initial={{ opacity: 0, y: 15 }}
                     animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -20 }}
+                    exit={{ opacity: 0, y: -15 }}
                     transition={{ duration: 0.3 }}
-                    className="text-lg sm:text-xl font-bold text-indigo-600 bg-indigo-50/80 px-2.5 py-1 rounded-md border border-indigo-100"
+                    className="text-base sm:text-lg font-bold text-indigo-600 bg-indigo-50/80 px-2.5 py-1 rounded-md border border-indigo-100 break-words"
                   >
                     {roles[activeRoleIndex]}
                   </motion.span>
@@ -149,14 +160,14 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ profile, onOpenResume,
             </motion.p>
 
             {/* Location & Contact Meta */}
-            <div className="flex flex-wrap items-center gap-4 text-xs sm:text-sm text-slate-500 font-medium">
+            <div className="flex flex-wrap items-center gap-3 sm:gap-4 text-xs sm:text-sm text-slate-500 font-medium">
               <div className="flex items-center gap-1.5">
-                <MapPin className="w-4 h-4 text-slate-400" />
-                <span>{profile.location[language]}</span>
+                <MapPin className="w-4 h-4 text-slate-400 shrink-0" />
+                <span className="break-words">{profile.location[language]}</span>
               </div>
               <div className="flex items-center gap-1.5">
-                <Mail className="w-4 h-4 text-slate-400" />
-                <span>{profile.email}</span>
+                <Mail className="w-4 h-4 text-slate-400 shrink-0" />
+                <span className="break-all">{profile.email}</span>
               </div>
             </div>
 
@@ -165,12 +176,12 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ profile, onOpenResume,
               initial={{ opacity: 0, y: 15 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.3 }}
-              className="flex flex-wrap items-center gap-3 pt-2"
+              className="flex flex-col xs:flex-row flex-wrap items-stretch xs:items-center gap-3 pt-2 w-full xs:w-auto"
             >
               <button
                 id="hero-resume-btn"
                 onClick={onOpenResume}
-                className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-semibold text-sm shadow-md shadow-indigo-200 transition-all hover:translate-y-[-1px] cursor-pointer"
+                className="w-full xs:w-auto flex items-center justify-center gap-2 px-5 py-3 xs:py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-semibold text-sm shadow-md shadow-indigo-200 transition-all hover:translate-y-[-1px] cursor-pointer min-h-[44px]"
               >
                 <FileText className="w-4 h-4" />
                 <span>{t('downloadResume')}</span>
@@ -179,7 +190,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ profile, onOpenResume,
               <a
                 id="hero-projects-btn"
                 href="#projects"
-                className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-white hover:bg-slate-50 text-slate-800 font-semibold text-sm border border-slate-300 shadow-xs transition-all hover:border-slate-400 cursor-pointer"
+                className="w-full xs:w-auto flex items-center justify-center gap-2 px-5 py-3 xs:py-2.5 rounded-xl bg-white hover:bg-slate-50 text-slate-800 font-semibold text-sm border border-slate-300 shadow-xs transition-all hover:border-slate-400 cursor-pointer min-h-[44px]"
               >
                 <Briefcase className="w-4 h-4 text-indigo-600" />
                 <span>{t('viewProjects')}</span>
@@ -188,7 +199,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ profile, onOpenResume,
               <a
                 id="hero-contact-btn"
                 href="#contact"
-                className="flex items-center gap-2 px-4 py-2.5 rounded-xl text-slate-600 hover:text-slate-900 font-medium text-sm transition-colors"
+                className="w-full xs:w-auto flex items-center justify-center gap-2 px-4 py-3 xs:py-2.5 rounded-xl text-slate-600 hover:text-slate-900 font-medium text-sm transition-colors min-h-[44px]"
               >
                 <span>{t('contactMe')}</span>
                 <span className="rtl:rotate-180">&rarr;</span>
@@ -333,8 +344,8 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ profile, onOpenResume,
         </div>
 
         {/* Bottom Metrics Strip */}
-        <div className="mt-16 grid grid-cols-1 sm:grid-cols-3 gap-4 p-6 rounded-2xl bg-white border border-slate-200/80 shadow-xs">
-          <div className="text-center md:text-left rtl:md:text-right border-b sm:border-b-0 sm:border-r rtl:sm:border-r-0 rtl:sm:border-l border-slate-100 p-2">
+        <div className="mt-10 sm:mt-16 grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4 p-4 sm:p-6 rounded-2xl bg-white border border-slate-200/80 shadow-xs">
+          <div className="text-center sm:text-left rtl:sm:text-right border-b sm:border-b-0 sm:border-r rtl:sm:border-r-0 rtl:sm:border-l border-slate-100 p-2 sm:p-3">
             <div className="text-3xl font-extrabold text-slate-900">
               {profile.stats.yearsExperience}+
             </div>

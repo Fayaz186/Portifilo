@@ -12,57 +12,51 @@ import {
 
 export const initialProfile: ProfileBio = {
   name: {
-    en: 'Abdul Razaq Hilal',
-    fa: 'عبدالرازق هلال'
+    en: 'Fayaz Ahmad Malikzai',
+    fa: 'فیاض احمد ملک‌زی'
   },
   title: {
-    en: 'Full-Stack Web & Mobile Developer | CS Researcher & Digital Builder',
-    fa: 'توسعه‌دهنده فول‌استک وب و موبایل | پژوهشگر علوم کامپیوتر و نوآور دیجیتال'
+    en: 'Web Designer & Developer | Computer Science Student',
+    fa: 'طراح و توسعه‌دهنده وب | دانشجوی علوم کامپیوتر'
   },
   roles: {
     en: [
+      'Web Designer',
       'Web Developer',
-      'Mobile App Developer',
-      'Computer Science Student',
-      'Researcher',
-      'Entrepreneur',
-      'Digital Product Builder'
+      'Computer Science Student'
     ],
     fa: [
+      'طراح وب',
       'توسعه‌دهنده وب',
-      'توسعه‌دهنده اپلیکیشن موبایل',
-      'دانشجوی علوم کامپیوتر',
-      'پژوهشگر علمی',
-      'کارآفرین و متشبث',
-      'توسعه‌دهنده محصولات دیجیتال'
+      'دانشجوی علوم کامپیوتر'
     ]
   },
   shortBio: {
-    en: 'Passionate software engineer and computer science researcher dedicated to creating high-impact web and mobile applications, advancing computational linguistics, and building digital products that solve real-world problems.',
-    fa: 'مهندس نرم‌افزار و پژوهشگر علوم کامپیوتر، متعهد به طراحی و ساخت اپلیکیشن‌های کارآمد وب و موبایل، پیشبرد هوش مصنوعی و ساخت محصولات دیجیتال کاربردی برای حل چالش‌های روزمره جامعه.'
+    en: "I am a Web Designer & Developer specializing in turning ideas into user-friendly, fast, and responsive digital experiences. From crafting beautiful UI designs to writing clean and optimized code, I'm here for every step of building a modern website.",
+    fa: "من طراح و توسعه‌دهنده وب هستم که در تبدیل ایده‌ها به تجربیات دیجیتال کاربرپسند، سریع و واکنش‌گرا تخصص دارم. از طراحی رابط‌های کاربری زیبا تا نوشتن کدهای تمیز و بهینه‌شده، در تمام مراحل ساخت یک وب‌سایت مدرن در کنار شما هستم."
   },
   fullBio: {
-    en: 'I am Abdul Razaq Hilal, a multidisciplinary technologist with an active focus on full-stack web engineering, native & cross-platform mobile development, and academic computer science research. As both an entrepreneur and product builder, I transform conceptual ideas into scalable, user-centric software. My research pursuits delve into low-resource natural language processing and resilient computing systems. I take pride in crafting clean, accessible code, mentoring fellow student developers, and contributing to open-source software.',
-    fa: 'من عبدالرازق هلال هستم؛ متخصص و نوآور در زمینه مهندسی وب، توسعه اپلیکیشن‌های پیشرفته موبایل و پژوهش‌های علمی علوم کامپیوتر. به عنوان یک کارآفرین و سازنده محصولات دیجیتال، ایده‌های خلاقانه را به نرم‌افزارهای پایدار، امن و کاربرپسند تبدیل می‌کنم. پژوهش‌های علمی من بر پردازش زبان‌های طبیعی (NLP) و سیستم‌های توزیع‌شده بدون انترنت متمرکز است. افتخار می‌کنم کدهای تمیز و معیاری می‌نویسم و به آموزش دانشجویان علاقه‌مند کمک می‌کنم.'
+    en: "I am Fayaz Ahmad Malikzai, a Web Designer, Web Developer, and Computer Science Student specializing in turning ideas into user-friendly, fast, and responsive digital experiences. From crafting beautiful UI designs to writing clean and optimized code, I'm here for every step of building a modern website. I take pride in crafting clean, accessible code, building modern interfaces, and creating robust digital solutions.",
+    fa: "من فیاض احمد ملک‌زی هستم؛ طراح وب، توسعه‌دهنده وب و دانشجوی علوم کامپیوتر. تخصص من در تبدیل ایده‌ها به تجربیات دیجیتال کاربرپسند، سریع و واکنش‌گرا است. از طراحی رابط‌های کاربری زیبا تا نوشتن کدهای تمیز و بهینه‌شده، در تمام مراحل ساخت یک وب‌سایت مدرن همراه و راهنمای شما هستم."
   },
   location: {
     en: 'Kabul, Afghanistan (Open to Global Remote & Relocation)',
     fa: 'کابل، افغانستان (آماده برای همکاری‌های بین‌المللی و کار از راه دور)'
   },
-  email: 'abdulrazaq.hilal@example.com',
+  email: 'fayazmalikzai055@gmail.com',
   phone: '+93 78 123 4567',
   avatarUrl: '/fayaz.jpeg',
   logoUrl: '/logo.jpeg',
   availableForHire: true,
   socialLinks: {
-    github: 'https://github.com/abdulrazaqhilal',
-    linkedin: 'https://linkedin.com/in/abdulrazaqhilal',
-    twitter: 'https://twitter.com/ar_hilal',
-    googleScholar: 'https://scholar.google.com/citations?user=abdulrazaqhilal',
-    researchGate: 'https://researchgate.net/profile/Abdul-Razaq-Hilal',
-    youtube: 'https://youtube.com/@abdulrazaqhilal',
-    email: 'mailto:abdulrazaq.hilal@example.com',
-    telegram: 'https://t.me/abdulrazaqhilal'
+    github: 'https://github.com/Fayaz186',
+    linkedin: 'https://linkedin.com/in/fayazmalikzai',
+    twitter: 'https://twitter.com/fayazmalikzai',
+    googleScholar: 'https://scholar.google.com/citations?user=fayazmalikzai',
+    researchGate: 'https://researchgate.net/profile/Fayaz-Ahmad-Malikzai',
+    youtube: 'https://youtube.com/@fayazmalikzai',
+    email: 'mailto:fayazmalikzai055@gmail.com',
+    telegram: 'https://t.me/fayazmalikzai'
   },
   stats: {
     yearsExperience: 4,
@@ -165,8 +159,8 @@ export const initialExperiences: ExperienceItem[] = [
       fa: 'توسعه‌دهنده اپلیکیشن‌های موبایل و هم‌بنیان‌گذار'
     },
     company: {
-      en: 'Hilaal Tech Studio',
-      fa: 'استودیو تخنیکی هلال (Hilaal Tech)'
+      en: 'Malikzai Digital Studio',
+      fa: 'استودیو دیجیتال ملک‌زی (Malikzai Studio)'
     },
     location: {
       en: 'Kabul, Afghanistan',
@@ -497,7 +491,7 @@ export const initialResearchPapers: ResearchPaper[] = [
       en: 'Low-Resource Neural Tokenization and Morphological Segmentation',
       fa: 'توکنایزیشن عصبی و تقطیع مورفولوژیکی در زبان‌های با منابع داده‌ای اندک'
     },
-    authors: ['Abdul Razaq Hilal', 'Prof. Mohammad Zahir Rahmani', 'Farhad Noori'],
+    authors: ['Fayaz Ahmad Malikzai', 'Prof. Mohammad Zahir Rahmani', 'Farhad Noori'],
     venue: {
       en: 'International Conference on Computational Linguistics (ICCL)',
       fa: 'کنفرانس بین‌المللی زبان‌شناسی محاسباتی و هوش مصنوعی'
@@ -509,8 +503,8 @@ export const initialResearchPapers: ResearchPaper[] = [
     },
     keywords: ['Natural Language Processing', 'Computational Linguistics', 'Tokenization', 'Neural Networks', 'Low-Resource Languages'],
     doi: '10.1145/3678901.3678922',
-    pdfUrl: 'https://example.com/papers/hilal-2024-pashto-nlp.pdf',
-    codeUrl: 'https://github.com/abdulrazaqhilal/pashto-tokenization-research',
+    pdfUrl: 'https://example.com/papers/malikzai-2024-pashto-nlp.pdf',
+    codeUrl: 'https://github.com/Fayaz186/pashto-tokenization-research',
     citationCount: 14
   },
   {
@@ -519,7 +513,7 @@ export const initialResearchPapers: ResearchPaper[] = [
       en: 'Fault-Tolerant Asynchronous Data Synchronization for Disconnected Mobile Clinics',
       fa: 'هماهنگ‌سازی ناهمگام و مقاوم داده‌ها برای کلینیک‌های صحی سیار در مناطق بدون انترنت'
     },
-    authors: ['Abdul Razaq Hilal', 'Dr. Ahmad Khalid Salimi'],
+    authors: ['Fayaz Ahmad Malikzai', 'Dr. Ahmad Khalid Salimi'],
     venue: {
       en: 'Journal of Distributed Systems and Humanitarian Technology (JDSHT)',
       fa: 'مجله علمی سیستم‌های توزیع‌شده و تکنالوژی‌های بشردوستانه'
@@ -531,8 +525,8 @@ export const initialResearchPapers: ResearchPaper[] = [
     },
     keywords: ['CRDTs', 'Distributed Systems', 'Mobile Health', 'Offline-First', 'Fault Tolerance'],
     doi: '10.1016/j.jdsht.2023.10442',
-    pdfUrl: 'https://example.com/papers/hilal-2023-distributed-mhealth.pdf',
-    codeUrl: 'https://github.com/abdulrazaqhilal/crdt-mhealth-sync',
+    pdfUrl: 'https://example.com/papers/malikzai-2023-distributed-mhealth.pdf',
+    codeUrl: 'https://github.com/Fayaz186/crdt-mhealth-sync',
     citationCount: 8
   }
 ];

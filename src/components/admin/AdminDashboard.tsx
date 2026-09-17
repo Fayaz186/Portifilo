@@ -303,34 +303,34 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
     <div className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-slate-950/80 backdrop-blur-xs animate-fadeIn overflow-hidden">
       <div className="relative bg-white rounded-3xl max-w-6xl w-full max-h-[96vh] shadow-2xl border border-slate-200 flex flex-col overflow-hidden">
         {/* Top bar */}
-        <div className="p-4 sm:p-5 bg-slate-900 text-white flex items-center justify-between gap-4 shrink-0">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-indigo-600 flex items-center justify-center font-bold">
+        <div className="p-3 sm:p-5 bg-slate-900 text-white flex items-center justify-between gap-2 sm:gap-4 shrink-0">
+          <div className="flex items-center gap-2 sm:gap-3 min-w-0">
+            <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl bg-indigo-600 flex items-center justify-center font-bold text-xs sm:text-sm shrink-0">
               AR
             </div>
-            <div>
-              <div className="flex items-center gap-2">
-                <h2 className="text-base font-bold text-white">
-                  Content Management & Administration
+            <div className="min-w-0">
+              <div className="flex items-center gap-1.5 sm:gap-2 flex-wrap">
+                <h2 className="text-xs sm:text-base font-bold text-white truncate">
+                  Admin CMS
                 </h2>
                 {isAdmin ? (
-                  <span className="text-[10px] px-2 py-0.5 rounded-full font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 flex items-center gap-1">
+                  <span className="text-[9px] sm:text-[10px] px-1.5 sm:px-2 py-0.5 rounded-full font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 flex items-center gap-1 shrink-0">
                     <ShieldCheck className="w-3 h-3" />
-                    Verified Administrator
+                    Verified
                   </span>
                 ) : (
-                  <span className="text-[10px] px-2 py-0.5 rounded-full font-bold bg-amber-500/20 text-amber-300 border border-amber-500/40">
-                    Read-Only Mode
+                  <span className="text-[9px] sm:text-[10px] px-1.5 sm:px-2 py-0.5 rounded-full font-bold bg-amber-500/20 text-amber-300 border border-amber-500/40 shrink-0">
+                    Read-Only
                   </span>
                 )}
               </div>
-              <p className="text-xs text-slate-400">
-                Logged in as: {currentUser?.email}
+              <p className="text-[10px] sm:text-xs text-slate-400 truncate max-w-[140px] xs:max-w-[200px] sm:max-w-none">
+                {currentUser?.email}
               </p>
             </div>
           </div>
 
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
             {saveStatus && (
               <div className="hidden sm:flex items-center gap-1.5 px-3 py-1 rounded-lg bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 text-xs font-semibold animate-pulse">
                 <Check className="w-3.5 h-3.5" />
@@ -343,11 +343,11 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                 logout();
                 onClose();
               }}
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 hover:text-white text-xs font-semibold transition-colors cursor-pointer"
+              className="flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 hover:text-white text-xs font-semibold transition-colors cursor-pointer"
               title="Logout"
             >
               <LogOut className="w-3.5 h-3.5" />
-              <span>Sign Out</span>
+              <span className="hidden sm:inline">Sign Out</span>
             </button>
 
             <button
@@ -360,9 +360,9 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
         </div>
 
         {/* Dashboard Layout: Sidebar Nav + Main Content Panel */}
-        <div className="flex flex-1 overflow-hidden">
+        <div className="flex flex-col sm:flex-row flex-1 overflow-hidden">
           {/* Sidebar Nav */}
-          <aside className="w-48 sm:w-60 bg-slate-50 border-r border-slate-200 p-3 space-y-1 overflow-y-auto shrink-0">
+          <aside className="w-full sm:w-56 md:w-60 bg-slate-50 border-b sm:border-b-0 sm:border-r border-slate-200 p-2 sm:p-3 flex sm:flex-col gap-1 overflow-x-auto sm:overflow-y-auto shrink-0 no-scrollbar">
             {[
               { id: 'overview', label: 'Dashboard Overview', icon: ShieldCheck },
               { id: 'profile', label: 'Biography & Info', icon: User },
@@ -384,18 +384,18 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                 <button
                   key={tab.id}
                   onClick={() => setCurrentTab(tab.id as TabType)}
-                  className={`w-full flex items-center justify-between px-3 py-2.5 rounded-xl text-xs sm:text-sm font-semibold transition-all cursor-pointer ${
+                  className={`shrink-0 sm:w-full flex items-center justify-between gap-2 px-3 py-2 sm:py-2.5 rounded-xl text-xs sm:text-sm font-semibold transition-all cursor-pointer whitespace-nowrap ${
                     isActive
                       ? 'bg-indigo-600 text-white shadow-xs'
                       : 'text-slate-600 hover:bg-slate-200/60 hover:text-slate-900'
                   }`}
                 >
-                  <div className="flex items-center gap-2.5 truncate">
+                  <div className="flex items-center gap-2 truncate">
                     <Icon className="w-4 h-4 shrink-0" />
                     <span className="truncate">{tab.label}</span>
                   </div>
                   {tab.badge !== undefined && (
-                    <span className={`text-[10px] px-2 py-0.5 rounded-full font-bold ${
+                    <span className={`text-[10px] px-1.5 sm:px-2 py-0.5 rounded-full font-bold ${
                       isActive ? 'bg-white text-indigo-700' : 'bg-rose-500 text-white'
                     }`}>
                       {tab.badge}
@@ -407,7 +407,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
           </aside>
 
           {/* Main Content Area */}
-          <main className="flex-1 p-6 overflow-y-auto bg-white">
+          <main className="flex-1 p-3.5 sm:p-6 overflow-y-auto bg-white">
             {/* 1. OVERVIEW */}
             {currentTab === 'overview' && (
               <div className="space-y-6">

@@ -2,9 +2,25 @@ rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
 
-    // Default Catch-all
+    // Global Safety Catch-All
     match /{document=**} {
       allow read, write: if false;
+    }
+
+    // Helper functions
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isAdmin() {
+      return isSignedIn() && (
+        (request.auth.token.email == 'fayazmalikzai055@gmail.com' && request.auth.token.email_verified == true) ||
+        exists(/databases/$(database)/documents/admins/$(request.auth.uid))
+      );
+    }
+
+    function isValidId(id) {
+      return id is string && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
     }
 
     // Connection Health Verification Endpoint
@@ -15,53 +31,70 @@ service cloud.firestore {
 
     // Content: Profile Bio & Metrics
     match /content/profile {
-      allow read, write: if true;
+      allow read: if true;
+      allow write: if isAdmin();
     }
 
     // Experiences Collection
     match /experiences/{experienceId} {
-      allow read, write: if true;
+      allow read: if true;
+      allow write: if isAdmin() && isValidId(experienceId);
     }
 
     // Education Collection
     match /education/{educationId} {
-      allow read, write: if true;
+      allow read: if true;
+      allow write: if isAdmin() && isValidId(educationId);
     }
 
     // Skills Collection
     match /skills/{skillId} {
-      allow read, write: if true;
+      allow read: if true;
+      allow write: if isAdmin() && isValidId(skillId);
     }
 
     // Projects Collection
     match /projects/{projectId} {
-      allow read, write: if true;
+      allow read: if true;
+      allow write: if isAdmin() && isValidId(projectId);
     }
 
     // Research Collection
     match /research/{researchId} {
-      allow read, write: if true;
+      allow read: if true;
+      allow write: if isAdmin() && isValidId(researchId);
     }
 
     // Media Collection
     match /media/{mediaId} {
-      allow read, write: if true;
+      allow read: if true;
+      allow write: if isAdmin() && isValidId(mediaId);
     }
 
     // Achievements Collection
     match /achievements/{achievementId} {
-      allow read, write: if true;
+      allow read: if true;
+      allow write: if isAdmin() && isValidId(achievementId);
     }
 
-    // Messages Collection
+    // Messages Collection: Public visitors can submit inquiries; only admin can view/manage
     match /messages/{messageId} {
-      allow read, write: if true;
+      allow read: if isAdmin();
+      allow create: if isValidId(messageId) &&
+        request.resource.data.senderName is string &&
+        request.resource.data.senderName.size() <= 100 &&
+        request.resource.data.senderEmail is string &&
+        request.resource.data.senderEmail.size() <= 150 &&
+        request.resource.data.message is string &&
+        request.resource.data.message.size() <= 3000 &&
+        request.resource.data.read == false;
+      allow update, delete: if isAdmin() && isValidId(messageId);
     }
 
     // Admins Collection
     match /admins/{adminId} {
-      allow read, write: if true;
+      allow read: if isSignedIn() && (request.auth.uid == adminId || isAdmin());
+      allow write: if isAdmin() && isValidId(adminId);
     }
   }
 }
-

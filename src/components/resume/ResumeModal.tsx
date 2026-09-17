@@ -88,7 +88,7 @@ export const ResumeModal: React.FC<ResumeModalProps> = ({
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = `Abdul_Razaq_Hilal_Resume_Data_${cvLang}.json`;
+    a.download = `Fayaz_Ahmad_Malikzai_Resume_Data_${cvLang}.json`;
     a.click();
     URL.revokeObjectURL(url);
   };
@@ -99,15 +99,24 @@ export const ResumeModal: React.FC<ResumeModalProps> = ({
     <div className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-slate-950/70 backdrop-blur-xs overflow-y-auto animate-fadeIn">
       <div className="relative bg-slate-100 rounded-3xl max-w-5xl w-full my-4 shadow-2xl border border-slate-300 flex flex-col max-h-[96vh] overflow-hidden">
         {/* Modal Top Bar (Controls - Hidden on Print) */}
-        <div className="p-4 sm:p-5 bg-white border-b border-slate-200 flex flex-wrap items-center justify-between gap-4 shrink-0 no-print">
-          <div>
-            <h2 className="text-lg font-bold text-slate-900 flex items-center gap-2">
-              <Printer className="w-5 h-5 text-indigo-600" />
-              <span>{t('resumeModalTitle')}</span>
-            </h2>
-            <p className="text-xs text-slate-500">
-              {t('resumeSubtitle')}
-            </p>
+        <div className="p-3 sm:p-5 bg-white border-b border-slate-200 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 sm:gap-4 shrink-0 no-print">
+          <div className="flex items-center justify-between sm:block">
+            <div>
+              <h2 className="text-base sm:text-lg font-bold text-slate-900 flex items-center gap-2">
+                <Printer className="w-4 h-4 sm:w-5 sm:h-5 text-indigo-600" />
+                <span>{t('resumeModalTitle')}</span>
+              </h2>
+              <p className="text-[11px] sm:text-xs text-slate-500">
+                {t('resumeSubtitle')}
+              </p>
+            </div>
+            {/* Mobile close button on top right */}
+            <button
+              onClick={onClose}
+              className="sm:hidden p-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-500 hover:text-slate-900 transition-colors cursor-pointer"
+            >
+              <X className="w-5 h-5" />
+            </button>
           </div>
 
           {/* Configuration Controls */}
@@ -136,7 +145,7 @@ export const ResumeModal: React.FC<ResumeModalProps> = ({
             <select
               value={template}
               onChange={(e) => setTemplate(e.target.value as any)}
-              className="text-xs font-semibold px-2.5 py-1.5 rounded-lg border border-slate-200 bg-slate-50 text-slate-700 focus:outline-none focus:ring-1 focus:ring-indigo-500 cursor-pointer"
+              className="text-xs font-semibold px-2 sm:px-2.5 py-1.5 rounded-lg border border-slate-200 bg-slate-50 text-slate-700 focus:outline-none focus:ring-1 focus:ring-indigo-500 cursor-pointer"
             >
               <option value="executive">Modern Executive</option>
               <option value="minimal">Tech Minimalist</option>
@@ -147,26 +156,26 @@ export const ResumeModal: React.FC<ResumeModalProps> = ({
             <button
               id="resume-print-btn"
               onClick={handlePrint}
-              className="flex items-center gap-1.5 px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-semibold text-xs sm:text-sm shadow-md shadow-indigo-200 transition-all cursor-pointer"
+              className="flex items-center gap-1.5 px-3 sm:px-4 py-1.5 sm:py-2 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-semibold text-xs sm:text-sm shadow-md shadow-indigo-200 transition-all cursor-pointer min-h-[36px]"
             >
-              <Printer className="w-4 h-4" />
+              <Printer className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
               <span>{t('printDownloadPdf')}</span>
             </button>
 
             {/* JSON Export */}
             <button
               onClick={handleExportJson}
-              className="flex items-center gap-1.5 px-3 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold text-xs border border-slate-300 transition-all cursor-pointer"
+              className="flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 sm:py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold text-xs border border-slate-300 transition-all cursor-pointer min-h-[36px]"
               title="Backup complete CV data as JSON"
             >
               <FileCode className="w-3.5 h-3.5" />
               <span className="hidden sm:inline">JSON</span>
             </button>
 
-            {/* Close */}
+            {/* Desktop Close */}
             <button
               onClick={onClose}
-              className="p-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-500 hover:text-slate-900 transition-colors cursor-pointer"
+              className="hidden sm:flex p-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-500 hover:text-slate-900 transition-colors cursor-pointer"
             >
               <X className="w-5 h-5" />
             </button>
@@ -174,14 +183,14 @@ export const ResumeModal: React.FC<ResumeModalProps> = ({
         </div>
 
         {/* Section Toggles Ribbon (No print) */}
-        <div className="px-5 py-2.5 bg-slate-50 border-b border-slate-200 flex flex-wrap items-center gap-3 text-xs font-medium text-slate-600 shrink-0 no-print">
-          <span className="font-bold text-slate-400 uppercase tracking-wider text-[10px]">
+        <div className="px-3 sm:px-5 py-2 sm:py-2.5 bg-slate-50 border-b border-slate-200 flex items-center gap-2 sm:gap-3 text-xs font-medium text-slate-600 shrink-0 no-print overflow-x-auto no-scrollbar">
+          <span className="shrink-0 font-bold text-slate-400 uppercase tracking-wider text-[10px]">
             {t('includeSections')}:
           </span>
           {(['summary', 'experience', 'education', 'skills', 'projects', 'research', 'achievements'] as const).map(sec => (
             <label
               key={sec}
-              className="inline-flex items-center gap-1.5 cursor-pointer select-none hover:text-slate-900"
+              className="shrink-0 whitespace-nowrap inline-flex items-center gap-1.5 cursor-pointer select-none hover:text-slate-900"
             >
               <input
                 type="checkbox"
@@ -195,11 +204,11 @@ export const ResumeModal: React.FC<ResumeModalProps> = ({
         </div>
 
         {/* Resume Preview Canvas (Optimized for Screen & Print) */}
-        <div className="p-4 sm:p-8 overflow-y-auto flex-1 flex justify-center bg-slate-200/60">
+        <div className="p-2 sm:p-4 md:p-8 overflow-y-auto flex-1 flex justify-center bg-slate-200/60">
           <div
             id="printable-resume-container"
             dir={isRTL ? 'rtl' : 'ltr'}
-            className={`w-full max-w-[210mm] min-h-[297mm] bg-white p-8 sm:p-12 shadow-md print-container transition-all text-slate-800 ${
+            className={`w-full max-w-[210mm] min-h-[297mm] bg-white p-4 sm:p-8 md:p-12 shadow-md print-container transition-all text-slate-800 ${
               template === 'minimal'
                 ? 'font-sans'
                 : template === 'academic'

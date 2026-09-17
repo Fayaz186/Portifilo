@@ -28,25 +28,25 @@ export const MediaGallerySection: React.FC<MediaGallerySectionProps> = ({ media 
     : media.filter(m => m.type === selectedType);
 
   return (
-    <section id="media" className="scroll-mt-28 py-20 bg-white border-b border-slate-200/80">
+    <section id="media" className="scroll-mt-28 py-12 sm:py-20 bg-white border-b border-slate-200/80">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-6">
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 sm:mb-10 gap-4 sm:gap-6">
           <div>
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-indigo-50 text-indigo-700 text-xs font-bold uppercase tracking-wider mb-3">
               <Award className="w-3.5 h-3.5" />
               <span>{language === 'fa' ? 'اسناد، تصدیق‌نامه‌ها و رسانه‌ها' : 'Media & Credentials'}</span>
             </div>
-            <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
+            <h2 className="text-2xl xs:text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
               {t('mediaTitle')}
             </h2>
-            <p className="mt-2 text-base sm:text-lg text-slate-600">
+            <p className="mt-2 text-sm sm:text-base md:text-lg text-slate-600">
               {t('mediaSubtitle')}
             </p>
           </div>
 
           {/* Type Filter Buttons */}
-          <div className="flex flex-wrap gap-2">
+          <div className="flex items-center gap-1.5 sm:gap-2 overflow-x-auto no-scrollbar pb-2 sm:pb-0 -mx-4 px-4 sm:mx-0 sm:px-0">
             {[
               { id: 'all', label: language === 'fa' ? 'تمام موارد' : 'All Media' },
               { id: 'certificate', label: language === 'fa' ? 'تصدیق‌نامه‌ها' : 'Certificates' },
@@ -56,7 +56,7 @@ export const MediaGallerySection: React.FC<MediaGallerySectionProps> = ({ media 
               <button
                 key={tab.id}
                 onClick={() => setSelectedType(tab.id)}
-                className={`px-3.5 py-1.5 rounded-lg text-xs sm:text-sm font-semibold transition-all cursor-pointer ${
+                className={`shrink-0 whitespace-nowrap px-3.5 py-1.5 rounded-lg text-xs sm:text-sm font-semibold transition-all cursor-pointer min-h-[38px] ${
                   selectedType === tab.id
                     ? 'bg-slate-900 text-white shadow-xs'
                     : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
@@ -81,7 +81,7 @@ export const MediaGallerySection: React.FC<MediaGallerySectionProps> = ({ media 
             onAction={() => setSelectedType('all')}
           />
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
             {filteredMedia.map((item) => (
             <div
               key={item.id}

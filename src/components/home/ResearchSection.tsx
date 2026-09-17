@@ -33,18 +33,18 @@ export const ResearchSection: React.FC<ResearchSectionProps> = ({ papers }) => {
   };
 
   return (
-    <section id="research" className="scroll-mt-28 py-20 bg-white border-b border-slate-200/80">
+    <section id="research" className="scroll-mt-28 py-12 sm:py-20 bg-white border-b border-slate-200/80">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
-        <div className="max-w-3xl mb-12">
+        <div className="max-w-3xl mb-8 sm:mb-12">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-md bg-indigo-50 text-indigo-700 text-xs font-bold uppercase tracking-wider mb-3">
             <BookOpen className="w-3.5 h-3.5" />
             <span>{language === 'fa' ? 'پژوهش‌های علمی و مقالات' : 'Academic Research'}</span>
           </div>
-          <h2 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
+          <h2 className="text-2xl xs:text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
             {t('researchTitle')}
           </h2>
-          <p className="mt-2 text-base sm:text-lg text-slate-600">
+          <p className="mt-2 text-sm sm:text-base md:text-lg text-slate-600">
             {t('researchSubtitle')}
           </p>
         </div>
@@ -60,17 +60,17 @@ export const ResearchSection: React.FC<ResearchSectionProps> = ({ papers }) => {
             }}
           />
         ) : (
-          <div className="space-y-6">
+          <div className="space-y-4 sm:space-y-6">
             {papers.map((paper) => {
             const isExpanded = expandedId === paper.id;
             return (
               <div
                 key={paper.id}
-                className="bg-slate-50/70 rounded-2xl p-6 sm:p-8 border border-slate-200/80 shadow-xs hover:border-slate-300 transition-all"
+                className="bg-slate-50/70 rounded-2xl p-4 sm:p-8 border border-slate-200/80 shadow-xs hover:border-slate-300 transition-all"
               >
-                <div className="flex flex-col md:flex-row md:items-start justify-between gap-4 pb-4 border-b border-slate-200/60">
+                <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-3 sm:gap-4 pb-4 border-b border-slate-200/60">
                   <div className="space-y-2 flex-1">
-                    <div className="flex items-center gap-2 flex-wrap text-xs">
+                    <div className="flex items-center gap-1.5 sm:gap-2 flex-wrap text-xs">
                       <span className="px-2.5 py-0.5 rounded-full font-bold bg-indigo-100/70 text-indigo-700">
                         {paper.year}
                       </span>
@@ -84,7 +84,7 @@ export const ResearchSection: React.FC<ResearchSectionProps> = ({ papers }) => {
                       )}
                     </div>
 
-                    <h3 className="text-xl font-bold text-slate-900 leading-snug">
+                    <h3 className="text-base sm:text-xl font-bold text-slate-900 leading-snug break-words">
                       {paper.title[language]}
                     </h3>
 
@@ -94,7 +94,7 @@ export const ResearchSection: React.FC<ResearchSectionProps> = ({ papers }) => {
                       {paper.authors.map((author, aIdx) => (
                         <span
                           key={aIdx}
-                          className={author.includes('Hilal') ? 'font-bold text-indigo-600' : ''}
+                          className={(author.includes('Malikzai') || author.includes('Fayaz')) ? 'font-bold text-indigo-600' : ''}
                         >
                           {author}{aIdx < paper.authors.length - 1 ? ', ' : ''}
                         </span>
