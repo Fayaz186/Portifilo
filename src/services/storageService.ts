@@ -37,13 +37,8 @@ import {
   deleteDoc,
   query,
   orderBy
-} from 'firebase/firestore';
-import {
-  uploadToSupabaseStorage,
-  SupabaseStorageCategory,
-  STORAGE_FALLBACKS,
-  isSupabaseConfigured
-} from './supabaseStorage';
+} from 'firebase/firestore/lite';
+import type { SupabaseStorageCategory } from './supabaseStorage';
 
 const KEYS = {
   PROFILE: 'arh_data_profile',
@@ -116,10 +111,11 @@ function getLocal<T>(key: string, fallback: T): T {
   }
 }
 
+// Cache refreshes are reads, not content mutations. Only completed writes
+// notify subscribers; otherwise a read can recursively trigger another read.
 function setLocal<T>(key: string, value: T): void {
   try {
     localStorage.setItem(key, JSON.stringify(migrateLegacyLanguageData(value)));
-    notifyChange(key);
   } catch (err) {
     console.error(`Error writing ${key} to storage:`, err);
   }
@@ -192,6 +188,7 @@ export async function saveProfile(profile: ProfileBio): Promise<void> {
       handleFirestoreError(e, OperationType.WRITE, 'content/profile');
     }
   }
+  notifyChange(KEYS.PROFILE);
 }
 
 // --- EXPERIENCES ---
@@ -223,6 +220,7 @@ export async function saveExperiences(items: ExperienceItem[]): Promise<void> {
       handleFirestoreError(e, OperationType.WRITE, 'experiences');
     }
   }
+  notifyChange(KEYS.EXPERIENCES);
 }
 
 // --- EDUCATION ---
@@ -254,6 +252,7 @@ export async function saveEducation(items: EducationItem[]): Promise<void> {
       handleFirestoreError(e, OperationType.WRITE, 'education');
     }
   }
+  notifyChange(KEYS.EDUCATION);
 }
 
 // --- SKILLS ---
@@ -285,6 +284,7 @@ export async function saveSkillCategories(items: SkillCategory[]): Promise<void>
       handleFirestoreError(e, OperationType.WRITE, 'skills');
     }
   }
+  notifyChange(KEYS.SKILLS);
 }
 
 // --- PROJECTS ---
@@ -316,6 +316,7 @@ export async function saveProjects(items: ProjectItem[]): Promise<void> {
       handleFirestoreError(e, OperationType.WRITE, 'projects');
     }
   }
+  notifyChange(KEYS.PROJECTS);
 }
 
 // --- RESEARCH ---
@@ -347,6 +348,7 @@ export async function saveResearchPapers(items: ResearchPaper[]): Promise<void> 
       handleFirestoreError(e, OperationType.WRITE, 'research');
     }
   }
+  notifyChange(KEYS.RESEARCH);
 }
 
 // --- MEDIA ---
@@ -378,6 +380,7 @@ export async function saveMediaItems(items: MediaItem[]): Promise<void> {
       handleFirestoreError(e, OperationType.WRITE, 'media');
     }
   }
+  notifyChange(KEYS.MEDIA);
 }
 
 // --- ACHIEVEMENTS ---
@@ -409,6 +412,7 @@ export async function saveAchievements(items: AchievementItem[]): Promise<void> 
       handleFirestoreError(e, OperationType.WRITE, 'achievements');
     }
   }
+  notifyChange(KEYS.ACHIEVEMENTS);
 }
 
 // --- MESSAGES ---
@@ -450,6 +454,7 @@ export async function saveContactMessage(msg: Omit<ContactMessage, 'id' | 'creat
     }
   }
 
+  notifyChange(KEYS.MESSAGES);
   return newMsg;
 }
 
@@ -465,6 +470,7 @@ export async function markMessageRead(id: string): Promise<void> {
       handleFirestoreError(e, OperationType.UPDATE, `messages/${id}`);
     }
   }
+  notifyChange(KEYS.MESSAGES);
 }
 
 export async function deleteContactMessage(id: string): Promise<void> {
@@ -479,6 +485,7 @@ export async function deleteContactMessage(id: string): Promise<void> {
       handleFirestoreError(e, OperationType.DELETE, `messages/${id}`);
     }
   }
+  notifyChange(KEYS.MESSAGES);
 }
 
 // --- FILE UPLOAD (SUPABASE STORAGE ONLY, FIREBASE STORAGE DISABLED) ---
@@ -497,6 +504,7 @@ export async function uploadPortfolioAsset(
   file: File,
   category: SupabaseStorageCategory
 ): Promise<{ url: string; isFallback: boolean; message?: string }> {
+  const { uploadToSupabaseStorage } = await import('./supabaseStorage');
   const result = await uploadToSupabaseStorage(file, category);
   return {
     url: result.url,
@@ -507,6 +515,7 @@ export async function uploadPortfolioAsset(
 
 export async function uploadFile(file: File, folder: string = 'profile-photos'): Promise<string> {
   const category = mapFolderToCategory(folder);
+  const { uploadToSupabaseStorage } = await import('./supabaseStorage');
   const result = await uploadToSupabaseStorage(file, category);
   return result.url;
 }

@@ -7,7 +7,7 @@ import {
   onAuthStateChanged,
   User
 } from 'firebase/auth';
-import { doc, getDoc } from 'firebase/firestore';
+import { doc, getDoc } from 'firebase/firestore/lite';
 import { db } from '../services/firebase';
 import { getSignInError } from '../utils/authErrors';
 

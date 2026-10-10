@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, lazy, Suspense } from 'react';
 import { LanguageProvider, useLanguage } from './context/LanguageContext';
 import { AuthProvider, useAuth } from './context/AuthContext';
 import { Navbar } from './components/layout/Navbar';
@@ -11,12 +11,11 @@ import { ProjectsSection } from './components/home/ProjectsSection';
 import { ResearchSection } from './components/home/ResearchSection';
 import { MediaGallerySection } from './components/home/MediaGallerySection';
 import { ContactSection } from './components/home/ContactSection';
-import { ResumeModal } from './components/resume/ResumeModal';
-import { AdminLoginModal } from './components/admin/AdminLoginModal';
-import { AdminDashboard } from './components/admin/AdminDashboard';
+const ResumeModal = lazy(() => import('./components/resume/ResumeModal').then(module => ({ default: module.ResumeModal })));
+const AdminLoginModal = lazy(() => import('./components/admin/AdminLoginModal').then(module => ({ default: module.AdminLoginModal })));
+const AdminDashboard = lazy(() => import('./components/admin/AdminDashboard').then(module => ({ default: module.AdminDashboard })));
 import { BrandLogo } from './components/common/BrandLogo';
 import { getStoredData, onDataChange } from './services/storageService';
-import { testFirebaseConnection } from './services/firebase';
 import { initialPortfolioData } from './data/initialData';
 import { PortfolioData } from './types';
 import {
@@ -40,19 +39,9 @@ const PortfolioContent: React.FC = () => {
   const loadData = useCallback(async () => {
     setIsLoading(true);
     try {
-      // Test Firebase connection health
-      const health = await testFirebaseConnection();
-      if (!health.success) {
-        setConnectionError(health.message);
-      } else {
-        setConnectionError(null);
-      }
-
       const res = await getStoredData();
       setData(res.data);
-      if (res.error) {
-        setConnectionError(res.error);
-      }
+      setConnectionError(res.error);
     } catch (err: any) {
       console.error('Error loading portfolio data:', err);
       setConnectionError(err?.message || 'Failed to communicate with Cloud Firestore');
@@ -214,8 +203,9 @@ const PortfolioContent: React.FC = () => {
         onOpenResume={() => setIsResumeOpen(true)}
       />
 
+      <Suspense fallback={<div role="status" className="fixed bottom-4 left-4 z-50 rounded-xl bg-white px-4 py-3 shadow-lg text-sm">{language === 'fa' ? 'در حال بارگذاری…' : 'Loading…'}</div>}>
       {/* Printable / Downloadable PDF Resume Generator Modal */}
-      <ResumeModal
+      {isResumeOpen && <ResumeModal
         isOpen={isResumeOpen}
         onClose={() => setIsResumeOpen(false)}
         profile={data.profile}
@@ -225,20 +215,20 @@ const PortfolioContent: React.FC = () => {
         projects={data.projects}
         research={data.research}
         achievements={data.achievements}
-      />
+      />}
 
       {/* Admin Authentication Modal (Only triggered via direct URL) */}
-      <AdminLoginModal
+      {isAdminLoginOpen && <AdminLoginModal
         isOpen={isAdminLoginOpen}
         onClose={handleCloseAdminModals}
         onSuccess={() => {
           setIsAdminLoginOpen(false);
           setIsAdminDashboardOpen(true);
         }}
-      />
+      />}
 
       {/* Admin Content Management Dashboard (Only triggered via direct URL) */}
-      <AdminDashboard
+      {isAdminDashboardOpen && <AdminDashboard
         isOpen={isAdminDashboardOpen}
         onClose={handleCloseAdminModals}
         profile={data.profile}
@@ -250,7 +240,8 @@ const PortfolioContent: React.FC = () => {
         media={data.media}
         achievements={data.achievements}
         onRefreshData={loadData}
-      />
+      />}
+      </Suspense>
     </div>
   );
 };

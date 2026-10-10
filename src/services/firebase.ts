@@ -1,6 +1,6 @@
 import { initializeApp, getApps, getApp, FirebaseApp } from 'firebase/app';
 import { getAuth, Auth, GoogleAuthProvider, signInWithPopup, signOut as fbSignOut } from 'firebase/auth';
-import { getFirestore, Firestore, doc, getDocFromServer } from 'firebase/firestore';
+import { getFirestore, Firestore, doc, getDoc } from 'firebase/firestore/lite';
 import firebaseConfig from '../../firebase-applet-config.json';
 
 let app: FirebaseApp;
@@ -77,7 +77,7 @@ export function handleFirestoreError(error: unknown, operationType: OperationTyp
 // Test connection on boot and provide callable check
 export async function testFirestoreConnection(): Promise<{ success: boolean; message: string }> {
   try {
-    await getDocFromServer(doc(db, 'test', 'connection'));
+    await getDoc(doc(db, 'test', 'connection'));
     return { success: true, message: 'Connected to Cloud Firestore' };
   } catch (error: any) {
     if (error instanceof Error && error.message.includes('the client is offline')) {
@@ -88,9 +88,6 @@ export async function testFirestoreConnection(): Promise<{ success: boolean; mes
     return { success: true, message: 'Cloud Firestore server is online and responding' };
   }
 }
-
-// Automatically test connection
-testFirestoreConnection().catch(console.warn);
 
 export const testFirebaseConnection = testFirestoreConnection;
 

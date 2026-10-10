@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useLanguage } from '../../context/LanguageContext';
 import { MediaItem } from '../../types';
 import { EmptyState } from '../common/EmptyState';
-import { parseVideoEmbedUrl } from '../../services/supabaseStorage';
+import { parseVideoEmbedUrl } from '../../utils/videoEmbed';
 import {
   Image,
   Award,
@@ -91,6 +91,8 @@ export const MediaGallerySection: React.FC<MediaGallerySectionProps> = ({ media 
               {/* Image / Video Aspect Box */}
               <div className="relative aspect-[4/3] bg-slate-900 overflow-hidden">
                 <img
+                  loading="lazy"
+                  decoding="async"
                   src={
                     item.thumbnailUrl ||
                     (item.type === 'video'

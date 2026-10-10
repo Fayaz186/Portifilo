@@ -37,10 +37,25 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ profile, onOpenResume 
   }, [language]);
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setActiveRoleIndex((prev) => (prev + 1) % roles.length);
-    }, 2800);
-    return () => clearInterval(interval);
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+    let interval: ReturnType<typeof setInterval> | undefined;
+    const updateTimer = () => {
+      clearInterval(interval);
+      interval = undefined;
+      if (!document.hidden && !reducedMotion.matches) {
+        interval = setInterval(() => {
+          setActiveRoleIndex((prev) => (prev + 1) % roles.length);
+        }, 2800);
+      }
+    };
+    updateTimer();
+    document.addEventListener('visibilitychange', updateTimer);
+    reducedMotion.addEventListener('change', updateTimer);
+    return () => {
+      clearInterval(interval);
+      document.removeEventListener('visibilitychange', updateTimer);
+      reducedMotion.removeEventListener('change', updateTimer);
+    };
   }, [roles.length]);
 
   return (
