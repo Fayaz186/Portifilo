@@ -15,7 +15,7 @@ import { ResumeModal } from './components/resume/ResumeModal';
 import { AdminLoginModal } from './components/admin/AdminLoginModal';
 import { AdminDashboard } from './components/admin/AdminDashboard';
 import { BrandLogo } from './components/common/BrandLogo';
-import { getStoredData, onDataChange, uploadPortfolioAsset, saveProfile } from './services/storageService';
+import { getStoredData, onDataChange } from './services/storageService';
 import { testFirebaseConnection } from './services/firebase';
 import { initialPortfolioData } from './data/initialData';
 import { PortfolioData } from './types';
@@ -114,37 +114,12 @@ const PortfolioContent: React.FC = () => {
     }
   };
 
-  const handleUpdateLogo = async (file: File) => {
-    let logoUrl = '';
-    try {
-      const res = await uploadPortfolioAsset(file, 'profile-photos');
-      if (!res.isFallback && res.url) {
-        logoUrl = res.url;
-      }
-    } catch (err) {
-      console.warn('Logo upload to Supabase failed, using local reader fallback:', err);
-    }
-
-    if (!logoUrl) {
-      logoUrl = await new Promise<string>((resolve, reject) => {
-        const reader = new FileReader();
-        reader.onload = () => resolve(reader.result as string);
-        reader.onerror = reject;
-        reader.readAsDataURL(file);
-      });
-    }
-
-    const updatedProfile = { ...data.profile, logoUrl };
-    await saveProfile(updatedProfile);
-    setData((prev) => ({ ...prev, profile: updatedProfile }));
-  };
-
   // Full Screen Initial Loading State
   if (isLoading && !data.profile.name.en) {
     return (
       <div className="min-h-screen bg-slate-900 text-white flex flex-col items-center justify-center p-6 space-y-6">
         <div className="relative flex items-center justify-center">
-          <BrandLogo customLogoUrl={data?.profile?.logoUrl} size="lg" />
+          <BrandLogo size="lg" />
           <Loader2 className="w-10 h-10 text-indigo-400 animate-spin absolute" />
         </div>
         <div className="text-center space-y-2 max-w-sm">
@@ -185,8 +160,6 @@ const PortfolioContent: React.FC = () => {
       {/* Top Navigation */}
       <Navbar
         onOpenResume={() => setIsResumeOpen(true)}
-        customLogoUrl={data.profile.logoUrl}
-        onUploadLogo={handleUpdateLogo}
       />
 
       {/* Main Single-Page Portfolio Flow */}
@@ -195,7 +168,6 @@ const PortfolioContent: React.FC = () => {
         <HeroSection
           profile={data.profile}
           onOpenResume={() => setIsResumeOpen(true)}
-          onUpdateProfile={(updated) => setData((prev) => ({ ...prev, profile: updated }))}
         />
 
         {/* 2. Biography & Achievements */}

@@ -45,7 +45,6 @@ import {
   saveFirebaseConfig,
   clearFirebaseConfig
 } from '../../services/firebase';
-import { BrandLogo } from '../common/BrandLogo';
 import {
   LogOut,
   X,
@@ -695,122 +694,6 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({
                         })}
                         className="w-full px-3 py-2 rounded-lg border border-slate-300 text-sm"
                       />
-                    </div>
-                  </div>
-
-                  {/* Official Brand Logo */}
-                  <div className="p-4 rounded-xl bg-slate-50 border border-slate-200/80 space-y-3">
-                    <div className="flex items-center justify-between">
-                      <label className="block text-xs font-bold uppercase text-slate-700">
-                        Official Brand Logo / د برانډ رسمي لګو
-                      </label>
-                      <span className="text-[10px] px-2 py-0.5 rounded-full bg-indigo-50 text-indigo-700 font-semibold border border-indigo-200">
-                        Brand Identity
-                      </span>
-                    </div>
-
-                    <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
-                      <div className="shrink-0 p-1 bg-white rounded-2xl border border-slate-200 shadow-sm">
-                        <BrandLogo customLogoUrl={profileForm.logoUrl} size="lg" />
-                      </div>
-
-                      <div className="flex-1 w-full space-y-2">
-                        <input
-                          type="text"
-                          value={profileForm.logoUrl || ''}
-                          onChange={(e) => setProfileForm({ ...profileForm, logoUrl: e.target.value })}
-                          placeholder="/logo.jpeg or https://..."
-                          className="w-full px-3 py-2 rounded-lg border border-slate-300 text-xs font-mono"
-                        />
-
-                        <div className="flex flex-wrap items-center gap-2">
-                          <label className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-semibold cursor-pointer shadow-sm transition-colors">
-                            <Upload className="w-3.5 h-3.5" />
-                            <span>Upload Logo File</span>
-                            <input
-                              type="file"
-                              accept="image/*"
-                              className="hidden"
-                              onChange={(e) => {
-                                const file = e.target.files?.[0];
-                                if (file) {
-                                  handleUploadAsset(file, 'profile-photos', (url) => {
-                                    setProfileForm({ ...profileForm, logoUrl: url });
-                                  });
-                                }
-                              }}
-                            />
-                          </label>
-
-                          <button
-                            type="button"
-                            onClick={() => setProfileForm({ ...profileForm, logoUrl: '/logo.jpeg' })}
-                            className="text-[11px] text-slate-600 hover:text-slate-900 underline px-2 py-1"
-                          >
-                            Reset to Default Logo
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Avatar URL & Supabase Storage Upload */}
-                  <div className="p-4 rounded-xl bg-slate-50 border border-slate-200/80 space-y-3">
-                    <div className="flex items-center justify-between">
-                      <label className="block text-xs font-bold uppercase text-slate-700">
-                        Portrait Profile Photo / شخصي انځور
-                      </label>
-                      <span className="text-[10px] px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700 font-semibold border border-emerald-200">
-                        Supabase Storage: profile-photos
-                      </span>
-                    </div>
-
-                    <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
-                      <div className="w-16 h-20 rounded-xl overflow-hidden bg-slate-200 border-2 border-indigo-200 shrink-0 shadow-sm">
-                        <img
-                          src={profileForm.avatarUrl || STORAGE_FALLBACKS['profile-photos']}
-                          alt="Avatar Preview"
-                          className="w-full h-full object-cover"
-                        />
-                      </div>
-
-                      <div className="flex-1 w-full space-y-2">
-                        <input
-                          type="text"
-                          value={profileForm.avatarUrl}
-                          onChange={(e) => setProfileForm({ ...profileForm, avatarUrl: e.target.value })}
-                          placeholder="https://..."
-                          className="w-full px-3 py-2 rounded-lg border border-slate-300 text-xs font-mono"
-                        />
-
-                        <div className="flex flex-wrap items-center gap-2">
-                          <label className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-semibold cursor-pointer shadow-sm transition-colors">
-                            <Upload className="w-3.5 h-3.5" />
-                            <span>Upload Photo to Storage</span>
-                            <input
-                              type="file"
-                              accept="image/*"
-                              className="hidden"
-                              onChange={(e) => {
-                                const file = e.target.files?.[0];
-                                if (file) {
-                                  handleUploadAsset(file, 'profile-photos', (url) => {
-                                    setProfileForm({ ...profileForm, avatarUrl: url });
-                                  });
-                                }
-                              }}
-                            />
-                          </label>
-
-                          <button
-                            type="button"
-                            onClick={() => setProfileForm({ ...profileForm, avatarUrl: STORAGE_FALLBACKS['profile-photos'] })}
-                            className="text-[11px] text-slate-500 hover:text-slate-800 underline px-2 py-1"
-                          >
-                            Reset Default Photo
-                          </button>
-                        </div>
-                      </div>
                     </div>
                   </div>
 

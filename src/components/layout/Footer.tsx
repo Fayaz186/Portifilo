@@ -33,7 +33,7 @@ export const Footer: React.FC<FooterProps> = ({ profile, onOpenResume }) => {
           {/* Col 1: Bio */}
           <div className="space-y-4">
             <div className="flex items-center gap-2.5">
-              <BrandLogo customLogoUrl={profile.logoUrl} size="md" />
+              <BrandLogo size="md" />
               <span className="font-bold text-white text-lg tracking-tight">
                 {profile.name[language]}
               </span>

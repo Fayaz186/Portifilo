@@ -4,21 +4,16 @@ import {
   Menu,
   X,
   FileText,
-  Globe,
-  Camera
+  Globe
 } from 'lucide-react';
 import { BrandLogo } from '../common/BrandLogo';
 
 interface NavbarProps {
   onOpenResume: () => void;
-  customLogoUrl?: string;
-  onUploadLogo?: (file: File) => Promise<void>;
 }
 
 export const Navbar: React.FC<NavbarProps> = ({
-  onOpenResume,
-  customLogoUrl,
-  onUploadLogo
+  onOpenResume
 }) => {
   const { language, setLanguage, t } = useLanguage();
   const [isScrolled, setIsScrolled] = useState(false);
@@ -60,26 +55,7 @@ export const Navbar: React.FC<NavbarProps> = ({
         {/* Brand / Logo */}
         <div id="brand-logo" className="flex items-center gap-2.5 group/logo">
           <div className="relative">
-            <BrandLogo customLogoUrl={customLogoUrl} size="md" />
-            {onUploadLogo && (
-              <label
-                title={language === 'fa' ? 'تغییر لوگو' : 'Upload custom logo'}
-                className="absolute inset-0 bg-slate-950/70 text-white rounded-xl flex items-center justify-center opacity-0 group-hover/logo:opacity-100 transition-opacity cursor-pointer shadow-md"
-              >
-                <Camera className="w-4 h-4 text-white" />
-                <input
-                  type="file"
-                  accept="image/*"
-                  className="hidden"
-                  onChange={async (e) => {
-                    const file = e.target.files?.[0];
-                    if (file && onUploadLogo) {
-                      await onUploadLogo(file);
-                    }
-                  }}
-                />
-              </label>
-            )}
+            <BrandLogo size="md" />
           </div>
           <a href="#" className="flex flex-col focus:outline-none">
             <span className="font-bold text-slate-900 leading-tight text-sm sm:text-base tracking-tight group-hover/logo:text-indigo-600 transition-colors line-clamp-1">

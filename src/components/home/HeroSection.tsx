@@ -12,69 +12,17 @@ import {
   BookOpen,
   MapPin,
   Sparkles,
-  ArrowDown,
-  Camera,
-  Upload,
-  CheckCircle2,
-  Loader2
+  ArrowDown
 } from 'lucide-react';
-import { uploadPortfolioAsset, saveProfile } from '../../services/storageService';
-import { compressImageFile } from '../../utils/imageCompressor';
 
 interface HeroSectionProps {
   profile: ProfileBio;
   onOpenResume: () => void;
-  onUpdateProfile?: (updated: ProfileBio) => void;
 }
 
-export const HeroSection: React.FC<HeroSectionProps> = ({ profile, onOpenResume, onUpdateProfile }) => {
+export const HeroSection: React.FC<HeroSectionProps> = ({ profile, onOpenResume }) => {
   const { language, t } = useLanguage();
   const [activeRoleIndex, setActiveRoleIndex] = useState(0);
-  const [isUploadingPhoto, setIsUploadingPhoto] = useState(false);
-  const [uploadSuccess, setUploadSuccess] = useState(false);
-
-  const handlePhotoSelect = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
-
-    setIsUploadingPhoto(true);
-    setUploadSuccess(false);
-
-    try {
-      // 1. Try Supabase Storage first
-      let photoUrl = '';
-      try {
-        const res = await uploadPortfolioAsset(file, 'profile-photos');
-        if (!res.isFallback && res.url) {
-          photoUrl = res.url;
-        }
-      } catch (err) {
-        console.warn('Supabase storage upload failed, using optimized local compression fallback:', err);
-      }
-
-      // 2. If no cloud storage URL, compress locally to a lightweight high-quality Data URL (under 100KB)
-      if (!photoUrl) {
-        photoUrl = await compressImageFile(file, 800, 800, 0.85);
-      }
-
-      // 3. Save to profile
-      const updatedProfile = { ...profile, avatarUrl: photoUrl };
-      await saveProfile(updatedProfile);
-      if (onUpdateProfile) {
-        onUpdateProfile(updatedProfile);
-      }
-
-      setUploadSuccess(true);
-      setTimeout(() => setUploadSuccess(false), 4000);
-    } catch (err: any) {
-      console.error('Failed to update profile photo:', err);
-    } finally {
-      setIsUploadingPhoto(false);
-      // Reset input value
-      e.target.value = '';
-    }
-  };
-
   const defaultRoles = {
     en: ['Web Designer', 'Web Developer', 'Computer Science Student'],
     fa: ['طراح وب', 'توسعه‌دهنده وب', 'دانشجوی علوم کامپیوتر']
@@ -267,44 +215,11 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ profile, onOpenResume,
               <div className="relative bg-white p-3 sm:p-4 rounded-3xl shadow-xl border border-slate-200/90 overflow-hidden">
                 <div className="relative aspect-[4/5] rounded-2xl overflow-hidden bg-slate-100 group">
                   <img
-                    src={profile.avatarUrl}
+                    src="/fayaz.jpeg"
                     alt={profile.name[language]}
                     referrerPolicy="no-referrer"
-                    onError={(e) => {
-                      (e.currentTarget as HTMLImageElement).src = '/fayaz.jpeg';
-                    }}
                     className="w-full h-full object-cover object-top hover:scale-105 transition-transform duration-700"
                   />
-
-                  {/* Photo Change Action Overlay / Badge */}
-                  <label
-                    title={language === 'fa' ? 'تغییر عکس پروفایل' : 'Change profile photo'}
-                    className="absolute top-3 right-3 z-20 flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-slate-900/85 hover:bg-slate-900 text-white backdrop-blur-md text-xs font-semibold shadow-lg transition-all cursor-pointer border border-white/20 hover:scale-105"
-                  >
-                    {isUploadingPhoto ? (
-                      <>
-                        <Loader2 className="w-3.5 h-3.5 animate-spin text-indigo-400" />
-                        <span>{language === 'fa' ? 'در حال آپلود...' : 'Updating...'}</span>
-                      </>
-                    ) : uploadSuccess ? (
-                      <>
-                        <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />
-                        <span>{language === 'fa' ? 'عکس ذخیره شد!' : 'Updated!'}</span>
-                      </>
-                    ) : (
-                      <>
-                        <Camera className="w-3.5 h-3.5 text-indigo-300" />
-                        <span>{language === 'fa' ? 'تغییر عکس' : 'Change Photo'}</span>
-                      </>
-                    )}
-                    <input
-                      type="file"
-                      accept="image/*"
-                      className="hidden"
-                      onChange={handlePhotoSelect}
-                      disabled={isUploadingPhoto}
-                    />
-                  </label>
 
                   {/* Subtle gradient overlay at bottom */}
                   <div className="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-transparent to-transparent pointer-events-none"></div>
