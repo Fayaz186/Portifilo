@@ -40,7 +40,6 @@ export const AdminLoginModal: React.FC<AdminLoginModalProps> = ({
     try {
       await loginWithGoogle();
       onSuccess();
-      onClose();
     } catch (err: any) {
       setLocalError(err?.message || 'Google authentication was cancelled or failed.');
     } finally {
@@ -56,7 +55,6 @@ export const AdminLoginModal: React.FC<AdminLoginModalProps> = ({
     try {
       await loginWithEmail(email, password);
       onSuccess();
-      onClose();
     } catch (err: any) {
       setLocalError(err?.message || 'Email authentication failed.');
     } finally {

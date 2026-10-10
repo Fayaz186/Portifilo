@@ -9,9 +9,17 @@ import {
 } from 'firebase/auth';
 import { doc, getDoc } from 'firebase/firestore';
 import { db } from '../services/firebase';
+import { getSignInError } from '../utils/authErrors';
 
 // Designated Administrator Email from system instructions/metadata
 export const ADMIN_EMAIL = 'fayazmalikzai055@gmail.com';
+
+function getAuthorizationError(user: User): string {
+  if (user.email?.toLowerCase().trim() === ADMIN_EMAIL && !user.emailVerified) {
+    return 'Your administrator email is not verified. Verify it in Firebase Authentication or sign in with the matching Google account.';
+  }
+  return `Signed in as ${user.email}, but this account is not registered as an administrator. Use ${ADMIN_EMAIL} or an account registered in the admins collection.`;
+}
 
 interface AuthContextType {
   isAdmin: boolean;
@@ -38,7 +46,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
     // Check primary admin email
     const emailLower = user.email?.toLowerCase().trim() || '';
-    if (emailLower === ADMIN_EMAIL.toLowerCase()) {
+    if (emailLower === ADMIN_EMAIL.toLowerCase() && user.emailVerified) {
       return true;
     }
 
@@ -52,11 +60,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       } catch (e) {
         console.warn('Could not verify admin status via admins collection:', e);
       }
-    }
-
-    // Check if email belongs to domain admin
-    if (emailLower.includes('admin') || emailLower.includes('fayazmalikzai') || emailLower.includes('fayaz')) {
-      return true;
     }
 
     return false;
@@ -95,15 +98,15 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       const authorized = await checkAdminAuthorization(user);
 
       if (!authorized) {
-        setAuthError(
-          `Signed in as ${user.email}, but this account is not registered as an administrator. Content editing is restricted to the administrator (${ADMIN_EMAIL}).`
-        );
+        throw new Error(getAuthorizationError(user));
       }
+      setCurrentUser(user);
+      setIsAdmin(true);
     } catch (err: any) {
       console.error('Google Sign-In Error:', err);
-      const msg = err?.message || 'Google sign-in was cancelled or failed.';
+      const msg = getSignInError(err, 'Google');
       setAuthError(msg);
-      throw err;
+      throw new Error(msg);
     }
   };
 
@@ -115,24 +118,18 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
 
     try {
-      const result = await signInWithEmailAndPassword(auth, email, pass);
+      const result = await signInWithEmailAndPassword(auth, email.trim(), pass);
       const user = result.user;
       const authorized = await checkAdminAuthorization(user);
 
       if (!authorized) {
-        setAuthError(
-          `Signed in as ${user.email}, but this account is not registered as an administrator. Content editing is restricted to ${ADMIN_EMAIL}.`
-        );
+        throw new Error(getAuthorizationError(user));
       }
+      setCurrentUser(user);
+      setIsAdmin(true);
     } catch (err: any) {
       console.error('Email Sign-In Error:', err);
-      let userFriendlyMsg = err?.message || 'Failed to sign in.';
-      if (err?.code === 'auth/operation-not-allowed') {
-        userFriendlyMsg =
-          'Email/Password sign-in is not enabled in Firebase Console. Please use "Sign in with Google" or enable Email/Password under Authentication in your Firebase Console.';
-      } else if (err?.code === 'auth/user-not-found' || err?.code === 'auth/invalid-credential') {
-        userFriendlyMsg = 'Invalid email or password. Please verify credentials or use "Sign in with Google".';
-      }
+      const userFriendlyMsg = getSignInError(err, 'Email/Password');
       setAuthError(userFriendlyMsg);
       throw new Error(userFriendlyMsg);
     }

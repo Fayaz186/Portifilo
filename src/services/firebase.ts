@@ -25,6 +25,7 @@ export { app, auth, db, storage };
 export const isFirebaseActive = (): boolean => !!(app && db);
 
 export const googleProvider = new GoogleAuthProvider();
+googleProvider.setCustomParameters({ prompt: 'select_account' });
 
 export enum OperationType {
   CREATE = 'create',
