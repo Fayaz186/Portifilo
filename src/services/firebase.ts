@@ -11,7 +11,7 @@ const storage: null = null;
 
 try {
   app = getApps().length > 0 ? getApp() : initializeApp(firebaseConfig);
-  // CRITICAL: The app will break without specifying firestoreDatabaseId
+  // Use the database belonging to this Firebase project.
   db = getFirestore(app, (firebaseConfig as any).firestoreDatabaseId);
   auth = getAuth(app);
 } catch (err) {
